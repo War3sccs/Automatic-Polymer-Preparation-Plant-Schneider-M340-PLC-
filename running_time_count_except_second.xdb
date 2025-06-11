@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-2-14:10:42" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.280" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<FBSource nameOfFBType="running_time_count_except_second" version="0.02" dateTime="dt#2022-12-02-13:53:03">
+		<attribute name="TypeCodeCheckSumString"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="671D"></attribute>
+		<inputParameters>
+			<variables name="limit" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="smaller_unit" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="bigger_unit" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inOutParameters>
+		<FBProgram name="compute">
+			<STSource>
+if smaller_unit &gt;= limit then
+    bigger_unit := bigger_unit + 1;
+    smaller_unit := 0;
+end_if;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

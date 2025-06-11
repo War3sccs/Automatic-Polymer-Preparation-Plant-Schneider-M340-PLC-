@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-3-14:34:31" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.15" dateTime="date_and_time#2022-9-30-17:20:38"></contentHeader>
+	<program>
+		<identProgram name="local_control_programme" type="SR" task="MAST"></identProgram>
+		<STSource>
+(*溶液制备*)
+(*搅拌机*)
+if solution_prepare_control_method = 0 then
+    stirrer_1 := local_control.metering_pump_1_manual_start; 
+    stirrer_2 := local_control.metering_pump_2_manual_start; 
+    stirrer_3 := local_control.metering_pump_3_manual_start; 
+    vibrator := local_control.vibrator_manual_start;
+    powder_heater := local_control.powder_screw_manual_start;
+else
+    ;
+end_if;
+
+(*高锰酸钾投加*)
+
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="emergency_stop" typeName="EBOOL" topologicalAddress="%I0.2.1">
+			<comment>紧急停机 0:停机 1:正常开机</comment>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="remote_control" typeName="system_parameter">
+			<comment>远程控制参数</comment>
+		</variables>
+		<variables name="control_switch" typeName="EBOOL" topologicalAddress="%I0.2.0">
+			<comment>控制选择:远程/在地 0:在地 1:远程</comment>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+	</dataBlock>
+	<DDTSource DDTName="system_parameter" version="0.03" dateTime="dt#2022-09-30-16:49:04">
+		<attribute name="TypeSignatureCheckSumString" value="17BB"></attribute>
+		<structure>
+			<variables name="control_switch" typeName="BOOL">
+				<comment>控制选择:远程/在地 0:在地 1:远程</comment>
+			</variables>
+			<variables name="emergency_stop" typeName="BOOL">
+				<comment>紧急停机 0:停机 1:正常开机</comment>
+			</variables>
+			<variables name="low_pressure_alarm" typeName="BOOL">
+				<comment>低水压报警</comment>
+			</variables>
+			<variables name="high_level_alarm" typeName="BOOL">
+				<comment>高液位报警</comment>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<comment>低液位报警</comment>
+			</variables>
+			<variables name="powder_screw_maintain" typeName="BOOL">
+				<comment>溶药机螺杆检修</comment>
+			</variables>
+			<variables name="stirrer_1_maintain" typeName="BOOL">
+				<comment>1#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_2_maintain" typeName="BOOL">
+				<comment>2#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_3_maintain" typeName="BOOL">
+				<comment>3#搅拌机检修</comment>
+			</variables>
+			<variables name="water_in_valve_maintain" typeName="BOOL">
+				<comment>进水电动阀及检修</comment>
+			</variables>
+			<variables name="water_pressure_sensor_maintain" typeName="BOOL">
+				<comment>压力变送器检修</comment>
+			</variables>
+			<variables name="powder_level_high" typeName="BOOL">
+				<comment>料斗物位高</comment>
+			</variables>
+			<variables name="powder_level_low" typeName="BOOL">
+				<comment>料斗物位低</comment>
+			</variables>
+			<variables name="powder_screw_status" typeName="BOOL">
+				<comment>"溶药机螺杆运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_1_status" typeName="BOOL">
+				<comment>"1#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_2_status" typeName="BOOL">
+				<comment>"2#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_3_status" typeName="BOOL">
+				<comment>"3#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="powder_screw_malfunction" typeName="BOOL">
+				<comment>溶药机螺杆正常/故障</comment>
+			</variables>
+			<variables name="solution_prepare_control_method" typeName="BOOL">
+				<comment>溶液制备控制方式 0:手动 1:自动</comment>
+			</variables>
+			<variables name="powder_screw_manual_start" typeName="BOOL">
+				<comment>"溶药机螺杆手动控制下启停"</comment>
+			</variables>
+			<variables name="metering_pump_1_manual_start" typeName="BOOL">
+				<comment>1#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_manual_start" typeName="BOOL">
+				<comment>2#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_1_manual_start" typeName="BOOL">
+				<comment>1#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_2_manual_start" typeName="BOOL">
+				<comment>2#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_3_manual_start" typeName="BOOL">
+				<comment>3#搅拌机启停</comment>
+			</variables>
+			<variables name="pressure_in" typeName="REAL">
+				<comment>进水压力</comment>
+			</variables>
+			<variables name="water_in_flow" typeName="REAL">
+				<comment>进水流量L/h</comment>
+			</variables>
+			<variables name="water_input_valve_position" typeName="REAL">
+				<comment>"溶药机进水电动阀开度" 0-100% real</comment>
+			</variables>
+			<variables name="powder_screw_runing_Hz" typeName="REAL">
+				<comment>溶药机螺杆运行频率</comment>
+			</variables>
+			<variables name="metering_pump_1_runing_Hz" typeName="REAL">
+				<comment>1#计量泵运行频率</comment>
+			</variables>
+			<variables name="metering_pump_2_runing_Hz" typeName="REAL">
+				<comment>2#计量泵运行频率</comment>
+			</variables>
+			<variables name="solution_preparing_control_method" typeName="REAL">
+				<comment>溶液制备控制方式 0:手动 1:自动</comment>
+			</variables>
+			<variables name="liquid_high_setting" typeName="REAL">
+				<comment>高液位报警-设置</comment>
+			</variables>
+			<variables name="liquid_low_setting" typeName="REAL">
+				<comment>低液位报警-设置</comment>
+			</variables>
+			<variables name="start_setting" typeName="REAL">
+				<comment>开机液位-设置</comment>
+			</variables>
+			<variables name="stop_setting" typeName="REAL">
+				<comment>停机液位-设置</comment>
+			</variables>
+			<variables name="low_pressure_setting" typeName="REAL">
+				<comment>低水压报警设置</comment>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+			</variables>
+			<variables name="solution_concentration" typeName="REAL">
+				<comment>高锰酸钾浓度%</comment>
+			</variables>
+			<variables name="powder_motor_Hz_manual" typeName="REAL">
+				<comment>手动控制下进料电机频率Hz设置</comment>
+			</variables>
+			<variables name="waterin_valve_manual_setting" typeName="REAL">
+				<comment>溶药机进水电动阀开度手动设定0-100% real</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+</STExchangeFile>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DDTExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-25-11:27:18" content="导出的数据类型源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.67" dateTime="date_and_time#2022-10-24-17:9:48"></contentHeader>
+	<DDTSource DDTName="PID_parameter" version="0.00" dateTime="dt#2022-09-30-16:48:06">
+		<attribute name="TypeSignatureCheckSumString" value="750C"></attribute>
+		<array>ARRAY[0..43] OF INT</array>
+	</DDTSource>
+</DDTExchangeFile>

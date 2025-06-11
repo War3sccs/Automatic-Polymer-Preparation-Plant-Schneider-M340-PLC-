@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-6-15:4:42" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.293" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<program>
+		<identProgram name="accumulation_flow" type="section" task="FAST"></identProgram>
+		<STSource>
+            (*累积投加量m3计算*)
+            (*反冲洗时不计算 累积投加量*)
+            if local_control.pump_rinsing = 0 then
+            local_control.KMnO4_solution_dosing_accumulate := local_control.KMnO4_solution_dosing_accumulate + local_control.KMnO4_solution_dosing_flow / 60.0 / 60.0 / 4.0 / 1000.0;
+            end_if;
+            (*累积溶液制备量m3计算*)
+            local_control.preparing_KMnO4_solution_accumulate := local_control.preparing_KMnO4_solution_accumulate + local_control.water_in_flow / 60.0 / 60.0 / 4.0 / 1000.0;
+            (*累积 高锰酸钾 粉料消耗量kg计算*)
+            (*50Hz时高锰酸钾进料能力为20.4585/1.302*2.7=42.425kg/L*)
+            (*送粉量计量公式: 当前频率Hz /50.0Hz * 42.425(50Hz时送粉量)*)
+            local_control.KMnO4_powder_consumption_accumulation := local_control.KMnO4_powder_consumption_accumulation + local_control.powder_screw_running_Hz / 50.0 * 42.425 / 60.0 / 60.0 / 4.0;
+		</STSource>
+	</program>
+</STExchangeFile>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-7-13:14:11" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.300" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<program>
+		<identProgram name="pump_membrane_rupture" type="SR" task="MAST"></identProgram>
+		<STSource>
+            (*隔膜破裂报警*)
+            membrane_rupture_1(IN := pump_1_rupture_source,
+                PT := T#3s,
+                Q =&gt; local_control.pump_1_membrane_rupture);
+            membrane_rupture_2(IN := pump_2_rupture_source,
+                PT := T#3s,
+                Q =&gt; local_control.pump_2_membrane_rupture);
+            (*membrane_rupture_pump_1 := pump_1_rupture_source;*)
+            (*membrane_rupture_pump_2 := pump_2_rupture_source;*)
+		</STSource>
+	</program>
+</STExchangeFile>

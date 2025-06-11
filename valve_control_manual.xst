@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-11-29-17:13:1" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.254" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<program>
+		<identProgram name="valve_control_manual" type="SR" task="MAST"></identProgram>
+		<STSource>
+chemical_supply_valve_1 := local_control.chemical_supply_valve_1_manual;
+chemical_supply_valve_2 := local_control.chemical_supply_valve_2_manual;
+rinsing_valve_1 := local_control.rinsing_valve_1_manual;
+rinsing_valve_2 := local_control.rinsing_valve_2_manual;
+		</STSource>
+	</program>
+</STExchangeFile>

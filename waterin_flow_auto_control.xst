@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-11-4-16:35:58" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.152" dateTime="date_and_time#2022-10-28-16:21:14"></contentHeader>
+	<program>
+		<identProgram name="waterin_flow_auto_control" type="SR" task="MAST"></identProgram>
+        <STSource>
+(*进水自动控制*)
+water_PID_control(liquid_flow := local_control.water_in_flow,
+                switch_auto_manual := local_control.solution_prepare_control_method,
+                water_in_PID_parameter := water_in_PID_parameter,
+                control_output =&gt; water_in_valve_control_source);
+</STSource>
+	</program>
+</STExchangeFile>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-2-13:5:16" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.277" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<FBSource nameOfFBType="reset_timer_and_count_second" version="0.03" dateTime="dt#2022-12-02-12:47:36">
+		<attribute name="TypeCodeCheckSumString"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="8EB3"></attribute>
+		<inputParameters>
+			<variables name="timing_stop" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="second" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="timing_reset" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inOutParameters>
+		<FBProgram name="counting">
+			<STSource>
+	IF timing_stop = 1 THEN
+	    second := second + 1;
+	    timing_reset := 0;
+    else
+        timing_reset := 1;
+	END_IF;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

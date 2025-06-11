@@ -1,0 +1,19 @@
+﻿
+macro_command main()
+float Hz_float_50_1, Hz_float_50_2,Hz_float_50_3,Hz_float_27648_1,Hz_float_27648_2,Hz_float_27648_3
+unsigned short Hz_int_1,Hz_int_2,Hz_int_3, plcnoresponse
+GetData(Hz_int_1, "Schneider SoMachine M Series (Ethernet)", IW, 128, 1)
+GetData(Hz_int_2, "Schneider SoMachine M Series (Ethernet)", IW, 130, 1)
+GetData(Hz_int_3, "Schneider SoMachine M Series (Ethernet)", IW, 132, 1)
+Hz_float_27648_1 = Hz_int_1
+Hz_float_50_1 = Hz_float_27648_1 * 50 / 27648
+Hz_float_27648_2 = Hz_int_2
+Hz_float_50_2 = Hz_float_27648_2 * 50 / 27648
+Hz_float_27648_3 = Hz_int_3
+Hz_float_50_3 = Hz_float_27648_3 * 50 / 27648
+plcnoresponse = 1
+SetData(Hz_float_50_1, "Local HMI", RW, 1, 1)
+SetData(Hz_float_50_2, "Local HMI", RW, 3, 1)
+SetData(Hz_float_50_3, "Local HMI", RW, 5, 1)
+SetData(plcnoresponse, "Local HMI", LB, 11963, 1)
+end macro_command

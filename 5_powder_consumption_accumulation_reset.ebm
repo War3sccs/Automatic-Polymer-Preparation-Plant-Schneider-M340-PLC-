@@ -1,0 +1,12 @@
+﻿macro_definition_begin
+    "id": "5"
+    "name": "powder_consumption_accumulation_reset"
+    "startup": "false"
+    "periodic": [ "false" ]
+    "interlock": [ "false" ]
+macro_definition_end
+
+macro_command main()
+float accumulation_reset=0
+SetData(accumulation_reset, "Schneider M340/M580 series", "local_control.KMnO4_powder_consumption_accumulation", 1)
+end macro_command

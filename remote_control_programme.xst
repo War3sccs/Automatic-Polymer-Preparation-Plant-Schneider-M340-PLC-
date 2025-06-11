@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-3-14:34:23" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.15" dateTime="date_and_time#2022-9-30-17:20:38"></contentHeader>
+	<program>
+		<identProgram name="remote_control_programme" type="SR" task="MAST"></identProgram>
+		<STSource>;
+</STSource>
+	</program>
+</STExchangeFile>

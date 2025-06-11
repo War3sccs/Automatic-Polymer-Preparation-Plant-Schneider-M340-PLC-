@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-9-22-22:1:4" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.000"></contentHeader>
+	<FBSource nameOfFBType="I_SCALE" version="0.00" dateTime="dt#1990-01-01-00:00:00">
+		<attribute name="TypeCodeCheckSumString"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="F0B8"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="REAL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="REAL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_int_real">
+			<STSource>
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_int := 0;
+elsif input_value &gt; input_max then
+temp_int := 10000;
+else
+temp_int := input_value;
+end_if;
+
+(* 整型转浮点 *)
+temp_real := INT_TO_REAL (IN := temp_int);
+temp_min := INT_TO_REAL (IN := input_min);
+temp_max := INT_TO_REAL (IN := input_max);
+
+(* 转换 *)
+output_value := (temp_real-temp_min) / (temp_max-temp_min) * (output_max-output_min) + output_min;
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

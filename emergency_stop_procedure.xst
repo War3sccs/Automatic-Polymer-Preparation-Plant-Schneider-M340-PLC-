@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-18-13:57:1" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.35" dateTime="date_and_time#2022-10-18-11:35:13"></contentHeader>
+	<program>
+		<identProgram name="emergency_stop_procedure" type="SR" task="MAST"></identProgram>
+		<STSource>(*关闭所有设备*)
+(*溶药机螺杆启停*)
+powder_screw_start := 0;
+
+(*搅拌机*)
+stirrer_1 := 0;
+stirrer_2 := 0;
+stirrer_3 := 0;
+(*电动阀*)
+chemical_supply_valve_1 := 0;
+chemical_supply_valve_2 := 0;
+rinsing_valve_1 := 0;
+rinsing_valve_2 := 0;
+(*直接设计阀门开度原始值*)
+water_in_valve_control_source := 0;
+(*料斗加热器/振荡器*)
+powder_heater := 0;
+vibrator := 0;
+(*料斗加热器*)
+powder_heater := 0;
+(*计量泵*)
+metering_pump_1_start := 0;
+metering_pump_2_start := 0;
+metering_pump_fan_1 := 0;
+metering_pump_fan_2 := 0;
+
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="stirrer_1" typeName="EBOOL" topologicalAddress="%Q0.2.16">
+			<comment>1#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_1" typeName="EBOOL" topologicalAddress="%Q0.2.21">
+			<comment>1#供药电动阀 1:关闭/0:打开</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_fan_1" typeName="EBOOL" topologicalAddress="%Q0.2.26">
+			<comment>1#计量泵风扇 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_fan_2" typeName="EBOOL" topologicalAddress="%Q0.2.27">
+			<comment>2#计量泵风扇 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_1_start" typeName="EBOOL">
+			<comment>1#计量泵启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_2_start" typeName="EBOOL">
+			<comment>2#计量泵启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="stirrer_2" typeName="EBOOL" topologicalAddress="%Q0.2.17">
+			<comment>2#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="vibrator" typeName="EBOOL" topologicalAddress="%Q0.2.19">
+			<comment>振荡器 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="rinsing_valve_1" typeName="EBOOL" topologicalAddress="%Q0.2.23">
+			<comment>1#反冲洗电动阀 1:打开/0:关闭</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_2" typeName="EBOOL" topologicalAddress="%Q0.2.22">
+			<comment>2#供药电动阀 1:关闭/0:打开</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="rinsing_valve_2" typeName="EBOOL" topologicalAddress="%Q0.2.24">
+			<comment>2#反冲洗电动阀 1:打开/0:关闭</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="waterin_valve_setting" typeName="REAL">
+			<comment>溶药机进水电动阀开度手动设定0-100% real</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="powder_screw_start" typeName="EBOOL">
+			<comment>"溶药机螺杆启停"</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="stirrer_3" typeName="EBOOL" topologicalAddress="%Q0.2.18">
+			<comment>3#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="auto_control" typeName="auto_control_parameter">
+			<comment>自动控制变量</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="powder_heater" typeName="EBOOL" topologicalAddress="%Q0.2.20">
+			<comment>料斗加热器 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+	</dataBlock>
+	<DDTSource DDTName="auto_control_parameter" version="0.01" dateTime="dt#2022-09-29-20:55:18">
+		<attribute name="TypeSignatureCheckSumString" value="1853"></attribute>
+		<structure>
+			<variables name="powder_screw_auto_start" typeName="BOOL">
+				<comment>"溶药机螺杆自动控制下启停"</comment>
+			</variables>
+			<variables name="metering_pump_1_auto_start" typeName="BOOL">
+				<comment>1#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_auto_start" typeName="BOOL">
+				<comment>2#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_1_auto_start" typeName="BOOL">
+				<comment>1#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_2_auto_start" typeName="BOOL">
+				<comment>2#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_3_auto_start" typeName="BOOL">
+				<comment>3#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="rinsing_temp_1" typeName="BOOL">
+				<comment>1#反冲洗中间变量</comment>
+			</variables>
+			<variables name="rinsing_temp_2" typeName="BOOL">
+				<comment>2#反冲洗中间变量</comment>
+			</variables>
+			<variables name="stirrer_running_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_running_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_stop_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_status" typeName="BOOL">
+				<comment>PLC内部控制中间参数:搅拌机运行/停止</comment>
+			</variables>
+			<variables name="stirrer_running_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机运行计时时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机间歇计时时间</comment>
+			</variables>
+			<variables name="stirrer_running_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机运行时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机间歇时间</comment>
+			</variables>
+			<variables name="powder_motor_Hz_auto_setting" typeName="REAL">
+				<comment>进料电机频率Hz</comment>
+			</variables>
+			<variables name="water_input_flow_setpoint" typeName="REAL">
+				<comment>进水流量PID控制setpoint</comment>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+</STExchangeFile>

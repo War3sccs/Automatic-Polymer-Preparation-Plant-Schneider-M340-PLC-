@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-8-12:47:10" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.219" dateTime="date_and_time#2022-10-28-16:21:14"></contentHeader>
+	<FBSource nameOfFBType="read_PLC_KMnO4" version="0.04" dateTime="dt#2022-12-08-12:11:53">
+		<attribute name="TypeCodeCheckSumString" value="D607"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="B50F"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="data_read" typeName="KMnO4_PLC_data">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="read_status" typeName="modbus_status">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+		</privateLocalVariables>
+		<FBProgram name="PLC_data_read">
+			<STSource>
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+read_status[2] := 50;
+(*if it isn't reading busy, then read*)
+if activity = 0
+then
+READ_VAR (ADR := address_in_transform,
+          OBJ := '%MW',
+          NUM := first_object,
+          NB := object_number,
+          GEST := read_status,
+          RECP =&gt; data_read);
+(*cancel*)
+(*read_status[0].1 := 1;*)
+
+(*通信状态*)
+activity := read_status[0].0;
+end_if;
+			</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="KMnO4_PLC_data" version="0.00" dateTime="dt#2022-12-08-11:39:56">
+		<attribute name="TypeSignatureCheckSumString" value="A5FD"></attribute>
+		<array>ARRAY[0..110] OF REAL</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_status" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="0C55"></attribute>
+		<array>ARRAY[0..3] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_address" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="2437"></attribute>
+		<array>ARRAY[0..7] OF INT</array>
+	</DDTSource>
+</FBExchangeFile>

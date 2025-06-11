@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-7-15:21:35" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.304" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<program>
+		<identProgram name="flow_calculate" type="SR" task="MAST"></identProgram>
+		<STSource>;
+(*计算进水流量*)
+water_flow_read(
+    frequency_source := water_flow_source,
+    K_factor := 0.001,
+    flow_output =&gt; local_control.water_in_flow);
+
+(*计算高锰酸钾投加流量*)
+KMnO4_flow_read(
+    frequency_source := KMnO4_flow_source,
+    K_factor := 0.0001,
+    flow_output =&gt; local_control.KMnO4_solution_dosing_flow);
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="KMnO4_flow_source" typeName="DINT" topologicalAddress="%ID0.1.1.2">
+			<comment>高锰酸钾投加流量原始值</comment>
+		</variables>
+		<variables name="water_flow_source" typeName="DINT" topologicalAddress="%ID0.1.0.2">
+			<comment>进水水量原始值</comment>
+		</variables>
+		<variables name="water_flow_read" typeName="read_flow_meter"></variables>
+		<variables name="KMnO4_flow_read" typeName="read_flow_meter"></variables>
+		<variables name="local_control" typeName="system_parameter">
+			<comment>在地控制参数</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+	</dataBlock>
+	<FBSource nameOfFBType="read_flow_meter" version="0.04" dateTime="dt#2022-11-08-15:01:28">
+		<attribute name="TypeCodeCheckSumString" value="634D"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="2DBF"></attribute>
+		<inputParameters>
+			<variables name="frequency_source" typeName="DINT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="K_factor" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="flow_output" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="frequency_source_real" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="frequency_to_flow">
+			<STSource>
+(*频率转换为real类型*)
+frequency_source_real := DINT_TO_REAL(IN := frequency_source);
+(*每脉冲0.001L，频率为Hz*，流量转换为L/h*)
+flow_output := frequency_source_real * K_factor * 60.0 * 60.0;                
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="system_parameter" version="0.06" dateTime="dt#2022-11-29-17:23:58">
+		<attribute name="TypeSignatureCheckSumString" value="8AF0"></attribute>
+		<structure>
+			<variables name="control_switch" typeName="BOOL">
+				<comment>控制选择:远程/在地 0:在地 1:远程</comment>
+			</variables>
+			<variables name="emergency_stop" typeName="BOOL">
+				<comment>紧急停机 0:停机 1:正常开机</comment>
+			</variables>
+			<variables name="source_water_low_flow_alarm" typeName="BOOL">
+				<comment>源水低流量报警  1:流量过低 0:正常</comment>
+			</variables>
+			<variables name="low_pressure_alarm" typeName="BOOL">
+				<comment>低水压报警</comment>
+			</variables>
+			<variables name="high_level_alarm" typeName="BOOL">
+				<comment>高液位报警</comment>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<comment>低液位报警</comment>
+			</variables>
+			<variables name="powder_screw_maintain" typeName="BOOL">
+				<comment>溶药机螺杆检修</comment>
+			</variables>
+			<variables name="stirrer_1_maintain" typeName="BOOL">
+				<comment>1#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_2_maintain" typeName="BOOL">
+				<comment>2#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_3_maintain" typeName="BOOL">
+				<comment>3#搅拌机检修</comment>
+			</variables>
+			<variables name="water_in_valve_maintain" typeName="BOOL">
+				<comment>进水电动阀及检修</comment>
+			</variables>
+			<variables name="water_pressure_sensor_maintain" typeName="BOOL">
+				<comment>压力变送器检修</comment>
+			</variables>
+			<variables name="pump_1_maintain" typeName="BOOL">
+				<comment>1#计量泵检修</comment>
+			</variables>
+			<variables name="pump_2_maintain" typeName="BOOL">
+				<comment>2#计量泵检修</comment>
+			</variables>
+			<variables name="pump_1_membrane_rupture" typeName="BOOL">
+				<comment>1#计量泵隔膜破裂 0:正常 1:破裂</comment>
+			</variables>
+			<variables name="pump_2_membrane_rupture" typeName="BOOL">
+				<comment>2#计量泵隔膜破裂 0:正常 1:破裂</comment>
+			</variables>
+			<variables name="powder_level_high" typeName="BOOL">
+				<comment>料斗物位高</comment>
+			</variables>
+			<variables name="powder_level_low" typeName="BOOL">
+				<comment>料斗物位低</comment>
+			</variables>
+			<variables name="powder_screw_status" typeName="BOOL">
+				<comment>"溶药机螺杆运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_1_status" typeName="BOOL">
+				<comment>"1#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_2_status" typeName="BOOL">
+				<comment>"2#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_3_status" typeName="BOOL">
+				<comment>"3#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="pump_1_status" typeName="BOOL">
+				<comment>"1#计量泵运行/停止" </comment>
+			</variables>
+			<variables name="pump_2_status" typeName="BOOL">
+				<comment>"2#计量泵运行/停止" </comment>
+			</variables>
+			<variables name="powder_screw_malfunction" typeName="BOOL">
+				<comment>溶药机螺杆正常/故障</comment>
+			</variables>
+			<variables name="pump_1_malfunction" typeName="BOOL">
+				<comment>1#计量泵正常/故障</comment>
+			</variables>
+			<variables name="pump_2_malfunction" typeName="BOOL">
+				<comment>2#计量泵正常/故障</comment>
+			</variables>
+			<variables name="pump_rinsing_control_method" typeName="BOOL">
+				<comment>计量泵反冲洗，控制方式 1:自动/ 0: 手动</comment>
+			</variables>
+			<variables name="pump_rinsing" typeName="BOOL">
+				<comment>计量泵反冲洗,有计量泵在冲洗时2台计量泵会同时关闭</comment>
+			</variables>
+			<variables name="pump_1_rinsing" typeName="BOOL">
+				<comment>1#计量泵反冲洗</comment>
+			</variables>
+			<variables name="pump_2_rinsing" typeName="BOOL">
+				<comment>2#计量泵反冲洗</comment>
+			</variables>
+			<variables name="powder_screw_malfunction_reset" typeName="BOOL">
+				<comment>溶药机螺杆故障复位</comment>
+			</variables>
+			<variables name="pump_1_malfunction_reset" typeName="BOOL">
+				<comment>1#计量泵故障复位</comment>
+			</variables>
+			<variables name="pump_2_malfunction_reset" typeName="BOOL">
+				<comment>2#计量泵故障复位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_manual" typeName="BOOL">
+				<comment>1#供药电动阀手动控制 1:关闭/0:打开</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_manual" typeName="BOOL">
+				<comment>2#供药电动阀手动控制 1:关闭/0:打开</comment>
+			</variables>
+			<variables name="rinsing_valve_1_manual" typeName="BOOL">
+				<comment>1#反冲洗电动阀手动控制 1:打开/0:关闭</comment>
+			</variables>
+			<variables name="rinsing_valve_2_manual" typeName="BOOL">
+				<comment>2#反冲洗电动阀手动控制 1:打开/0:关闭</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_shut" typeName="BOOL">
+				<comment>1#供药电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_open" typeName="BOOL">
+				<comment>1#供药电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_shut" typeName="BOOL">
+				<comment>2#供药电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_open" typeName="BOOL">
+				<comment>2#供药电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_1_shut" typeName="BOOL">
+				<comment>1#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_1_open" typeName="BOOL">
+				<comment>1#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_2_shut" typeName="BOOL">
+				<comment>2#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_2_open" typeName="BOOL">
+				<comment>2#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_shutting" typeName="BOOL">
+				<comment>1#供药电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_opening" typeName="BOOL">
+				<comment>1#供药电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_shutting" typeName="BOOL">
+				<comment>2#供药电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_opening" typeName="BOOL">
+				<comment>2#供药电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_1_shutting" typeName="BOOL">
+				<comment>1#反冲洗电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_1_opening" typeName="BOOL">
+				<comment>1#反冲洗电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_2_shutting" typeName="BOOL">
+				<comment>2#反冲洗电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_2_opening" typeName="BOOL">
+				<comment>2#反冲洗电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="pump_1_control_method" typeName="BOOL">
+				<comment>1#计量泵溶液投加控制方式 0:手动设置频率 1:自动-根据水量和溶液投率自动算</comment>
+			</variables>
+			<variables name="pump_2_control_method" typeName="BOOL">
+				<comment>2#计量泵溶液投加控制方式 0:手动设置频率 1:自动-根据水量和溶液投率自动算</comment>
+			</variables>
+			<variables name="metering_pump_1_manual_start" typeName="BOOL">
+				<comment>1#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_manual_start" typeName="BOOL">
+				<comment>2#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="solution_prepare_control_method" typeName="BOOL">
+				<comment>溶液制备控制方式 0:手动 1:自动</comment>
+			</variables>
+			<variables name="start_polymer_preparing" typeName="BOOL">
+				<comment>溶药机开机</comment>
+			</variables>
+			<variables name="stop_polymer_preparing" typeName="BOOL">
+				<comment>溶药机停机</comment>
+			</variables>
+			<variables name="powder_screw_manual_start" typeName="BOOL">
+				<comment>"溶药机螺杆手动控制下启停"</comment>
+			</variables>
+			<variables name="stirrer_1_manual_start" typeName="BOOL">
+				<comment>1#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_2_manual_start" typeName="BOOL">
+				<comment>2#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_3_manual_start" typeName="BOOL">
+				<comment>3#搅拌机启停</comment>
+			</variables>
+			<variables name="vibrator_manual_start" typeName="BOOL">
+				<comment>振荡器启停</comment>
+			</variables>
+			<variables name="powder_heater_manual_start" typeName="BOOL">
+				<comment>料斗加热器启停</comment>
+			</variables>
+			<variables name="stirrer_running_time_setting" typeName="INT">
+				<comment>设定搅拌机运行时间min</comment>
+			</variables>
+			<variables name="stirrer_stop_time_setting" typeName="INT">
+				<comment>设定搅拌机间歇时间min</comment>
+			</variables>
+			<variables name="pump_1_accumulate_second" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-秒</comment>
+			</variables>
+			<variables name="pump_1_accumulate_minute" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-分</comment>
+			</variables>
+			<variables name="pump_1_accumulate_hour" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-时</comment>
+			</variables>
+			<variables name="pump_1_accumulate_day" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-天</comment>
+			</variables>
+			<variables name="pump_1_accumulate_year" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-年</comment>
+			</variables>
+			<variables name="pump_2_accumulate_second" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-秒</comment>
+			</variables>
+			<variables name="pump_2_accumulate_minute" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-分</comment>
+			</variables>
+			<variables name="pump_2_accumulate_hour" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-时</comment>
+			</variables>
+			<variables name="pump_2_accumulate_day" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-天</comment>
+			</variables>
+			<variables name="pump_2_accumulate_year" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-年</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_second" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-秒</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_minute" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-分</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_hour" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-时</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_day" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-天</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_year" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-年</comment>
+			</variables>
+			<variables name="stirrer_accumulate_second" typeName="INT">
+				<comment>搅拌机运行时间统计-秒</comment>
+			</variables>
+			<variables name="stirrer_accumulate_minute" typeName="INT">
+				<comment>搅拌机运行时间统计-分</comment>
+			</variables>
+			<variables name="stirrer_accumulate_hour" typeName="INT">
+				<comment>搅拌机运行时间统计-时</comment>
+			</variables>
+			<variables name="stirrer_accumulate_day" typeName="INT">
+				<comment>搅拌机运行时间统计-天</comment>
+			</variables>
+			<variables name="stirrer_accumulate_year" typeName="INT">
+				<comment>搅拌机运行时间统计-年</comment>
+			</variables>
+			<variables name="liquid_level_KMnO4" typeName="REAL">
+				<comment>高锰酸钾池液位</comment>
+			</variables>
+			<variables name="source_water_flow" typeName="REAL">
+				<comment>源水流量 m3/h</comment>
+			</variables>
+			<variables name="pressure_in" typeName="REAL">
+				<comment>进水压力</comment>
+			</variables>
+			<variables name="water_in_flow" typeName="REAL">
+				<comment>进水流量L/h</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_target" typeName="REAL">
+				<comment>高锰酸钾计量泵计算投加流量 L/h 由程序自动计算得出</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_flow" typeName="REAL">
+				<comment>高锰酸钾计量泵投加流量 L/h</comment>
+			</variables>
+			<variables name="preparing_KMnO4_solution_accumulate" typeName="REAL">
+				<comment>高锰酸钾溶液累计制备量 L</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_accumulate" typeName="REAL">
+				<comment>高锰酸钾计量泵累计投加量 L</comment>
+			</variables>
+			<variables name="KMnO4_dosing_mg_L" typeName="REAL">
+				<comment>高锰酸钾溶液投率 : Real;   // 单位：mg/L </comment>
+			</variables>
+			<variables name="solution_preparing_flow_setting" typeName="REAL">
+				<comment>高锰酸钾溶液制备流量 L/h</comment>
+			</variables>
+			<variables name="solution_concentration" typeName="REAL">
+				<comment>高锰酸钾浓度 : Real;   // % </comment>
+			</variables>
+			<variables name="KMnO4_density" typeName="REAL">
+				<comment>高锰酸钾密度 : Real;   // 单位：g/cm3 </comment>
+			</variables>
+			<variables name="source_water_flow_low_setting" typeName="REAL">
+				<comment>源水低流量 : Real;   // 单位：m3/h，原水流量低于此值自动停泵 </comment>
+			</variables>
+			<variables name="water_input_valve_position" typeName="REAL">
+				<comment>"溶药机进水电动阀开度" 0-100% real</comment>
+			</variables>
+			<variables name="powder_screw_running_Hz" typeName="REAL">
+				<comment>溶药机螺杆运行频率</comment>
+			</variables>
+			<variables name="metering_pump_1_running_Hz" typeName="REAL">
+				<comment>1#计量泵运行频率</comment>
+			</variables>
+			<variables name="metering_pump_2_running_Hz" typeName="REAL">
+				<comment>2#计量泵运行频率</comment>
+			</variables>
+			<variables name="liquid_high_setting" typeName="REAL">
+				<comment>高液位报警-设置</comment>
+			</variables>
+			<variables name="liquid_low_setting" typeName="REAL">
+				<comment>低液位报警-设置</comment>
+			</variables>
+			<variables name="start_setting" typeName="REAL">
+				<comment>开机液位-设置</comment>
+			</variables>
+			<variables name="stop_setting" typeName="REAL">
+				<comment>停机液位-设置</comment>
+			</variables>
+			<variables name="low_pressure_setting" typeName="REAL">
+				<comment>低水压报警设置</comment>
+			</variables>
+			<variables name="powder_screw_motor_Hz_manual" typeName="REAL">
+				<comment>手动控制下进料电机频率Hz设置</comment>
+			</variables>
+			<variables name="waterin_valve_manual_setting" typeName="REAL">
+				<comment>溶药机进水电动阀开度手动设定0-100% real</comment>
+			</variables>
+			<variables name="metering_pump_1_Hz_manual_setting" typeName="REAL">
+				<comment>1#计量泵频率设定 Hz</comment>
+			</variables>
+			<variables name="metering_pump_2_Hz_manual_setting" typeName="REAL">
+				<comment>2#计量泵频率设定 Hz</comment>
+			</variables>
+			<variables name="metering_pump_1_stroke_length" typeName="REAL">
+				<comment>1#计量泵冲程长度 %</comment>
+			</variables>
+			<variables name="metering_pump_2_stroke_length" typeName="REAL">
+				<comment>2#计量泵冲程长度 %</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+</STExchangeFile>

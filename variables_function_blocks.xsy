@@ -1,0 +1,1418 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VariablesExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2023-5-22-13:30:33" content="Variable source file" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.330" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<dataBlock>
+		<variables name="water_pressure_data" typeName="water_pressure">
+			<comment>进水压力</comment>
+		</variables>
+		<variables name="polymer_storage_tank" typeName="storage_KMnO4">
+			<comment>储液罐</comment>
+		</variables>
+		<variables name="vibrator_status" typeName="EBOOL" topologicalAddress="%I0.2.3">
+			<comment>振荡器 1:运行/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="powder_screw_fan" typeName="EBOOL" topologicalAddress="%Q0.2.25">
+			<comment>溶药机螺杆风扇 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="running_pump_1" typeName="EBOOL" topologicalAddress="%Q0.2.28">
+			<comment>1#计量泵运行/停止 1:运行0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="running_pump_2" typeName="EBOOL" topologicalAddress="%Q0.2.29">
+			<comment>2#计量泵运行/停止 1:运行0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="waterin_valve_setting" typeName="REAL">
+			<comment>溶药机进水电动阀开度手动设定0-100% real</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="water_in_PID_parameter" typeName="PID_parameter">
+			<comment>进水流量PID控制变量</comment>
+			<instanceElementDesc name="[0]">
+				<comment>SP:setpoint 0-10000</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[1]">
+				<comment>Value of the manual output of the PID (between 0 and 10000)</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[2]">
+				<comment>KP Proportional gain of the PID (x100), signed without unit</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[3]">
+				<comment>TI The PID’s integral time (between 0 and 20000) is shown in 0.1 seconds.</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[4]">
+				<comment>TD The PID’s derivative time (between 0 and 10000) is shown in 0.1 seconds</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[5]">
+				<comment>TS The PID’s sampling period (between 1 and 32000) is shown in 0.01 seconds.</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[6]">
+				<comment>Upper limit of the PID’s output in automatic (between 0 and 10000)</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[7]">
+				<comment>Lower limit of the PID’s output in automatic (between 0 and 10000).</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[8]">
+				<comment>PV_DEV 8.0;NO_BUMP  8.4</comment>
+			</instanceElementDesc>
+			<instanceElementDesc name="[9]">
+				<comment>PV_SUP Upper limit of the measurement scale’s range, in a physical unit (x100)</comment>
+			</instanceElementDesc>
+		</variables>
+		<variables name="TON_3" typeName="TON"></variables>
+		<variables name="pump_1_address" typeName="modbus_address"></variables>
+		<variables name="pump_2_address" typeName="modbus_address"></variables>
+		<variables name="pump_1_read_status" typeName="modbus_connect_brief"></variables>
+		<variables name="pump_2_read_status" typeName="modbus_connect_brief"></variables>
+		<variables name="powder_screw_read_status" typeName="modbus_connect_brief"></variables>
+		<variables name="pump_1_data_read" typeName="modbus_data_read"></variables>
+		<variables name="pump_2_data_read" typeName="modbus_data_read"></variables>
+		<variables name="powder_screw_data_read" typeName="modbus_data_read"></variables>
+		<variables name="pump_1_write_status" typeName="modbus_connect_brief"></variables>
+		<variables name="pump_1_data_write" typeName="modbus_data_write"></variables>
+		<variables name="Modbus_communication_index" typeName="INT"></variables>
+		<variables name="powder_screw_drive" typeName="motor_data_read"></variables>
+		<variables name="motor_data_read_1" typeName="motor_data_read"></variables>
+		<variables name="pump_1_drive" typeName="motor_data_read"></variables>
+		<variables name="pump_2_drive" typeName="motor_data_read"></variables>
+		<variables name="setting_Hz_real" typeName="REAL"></variables>
+		<variables name="pump_2_data_write" typeName="modbus_data_write"></variables>
+		<variables name="powder_screw_data_write" typeName="modbus_data_write"></variables>
+		<variables name="pump_2_write_status" typeName="modbus_connect_brief"></variables>
+		<variables name="powder_screw_write_status" typeName="modbus_connect_brief"></variables>
+		<variables name="powder_screw_drive_write" typeName="motor_data_write"></variables>
+		<variables name="pump_1_drive_write" typeName="motor_data_write"></variables>
+		<variables name="pump_2_drive_write" typeName="motor_data_write"></variables>
+		<variables name="scale_real_to_int_1" typeName="scale_real_to_int"></variables>
+		<variables name="water_PID_control" typeName="PID_flow_control"></variables>
+		<variables name="rinsing_valve_1_shut" typeName="EBOOL" topologicalAddress="%I0.2.10">
+			<comment>1#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="rinsing_valve_1_open" typeName="EBOOL" topologicalAddress="%I0.2.11">
+			<comment>1#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_2_shut" typeName="EBOOL" topologicalAddress="%I0.2.8">
+			<comment>2#供药电动阀 关到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="water_in_valve_reply" typeName="scale_int_to_real"></variables>
+		<variables name="rinsing_valve_2_open" typeName="EBOOL" topologicalAddress="%I0.2.13">
+			<comment>2#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="water_in_valve_position_source" typeName="INT" topologicalAddress="%IW0.3.0.0">
+			<comment>溶药机进水电动阀4-20mA原始值-输入</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="powder_level_high_status" typeName="EBOOL" topologicalAddress="%I0.2.14">
+			<comment>料斗物位高 1:过高/0:正常</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="remote_control" typeName="system_parameter" topologicalAddress="%Mw000">
+			<comment>远程控制参数</comment>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_1_open" typeName="EBOOL" topologicalAddress="%I0.2.7">
+			<comment>1#供药电动阀 开到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="stirrer_3_status" typeName="EBOOL" topologicalAddress="%I0.2.5">
+			<comment>3#搅拌机 1:运行/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_1_shut" typeName="EBOOL" topologicalAddress="%I0.2.6">
+			<comment>1#供药电动阀 关到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="rinsing_valve_2_shut" typeName="EBOOL" topologicalAddress="%I0.2.12">
+			<comment>2#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="stirrer_1_status" typeName="EBOOL" topologicalAddress="%I0.2.2">
+			<comment>1#搅拌机 1:运行/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="emergency_stop" typeName="EBOOL" topologicalAddress="%I0.2.1">
+			<comment>紧急停机 0:停机 1:正常开机</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="stirrer_2_status" typeName="EBOOL" topologicalAddress="%I0.2.4">
+			<comment>2#搅拌机 1:运行/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="control_switch" typeName="EBOOL" topologicalAddress="%I0.2.0">
+			<comment>控制选择:远程/在地 0:在地 1:远程</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="local_control" typeName="system_parameter">
+			<comment>在地控制参数</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_2_open" typeName="EBOOL" topologicalAddress="%I0.2.9">
+			<comment>2#供药电动阀 开到位 1:到位/0:未到位</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="powder_level_low_status" typeName="EBOOL" topologicalAddress="%I0.2.15">
+			<comment>料斗物位低 1:过低/0:正常</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="pump_2_manual_control" typeName="pump_dosing_manual"></variables>
+		<variables name="pump_1_manual_control" typeName="pump_dosing_manual"></variables>
+		<variables name="chemical_supply_valve_2" typeName="EBOOL" topologicalAddress="%Q0.2.22">
+			<comment>2#供药电动阀 1:关闭/0:打开</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="rinsing_valve_2" typeName="EBOOL" topologicalAddress="%Q0.2.24">
+			<comment>2#反冲洗电动阀 1:打开/0:关闭</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="powder_heater" typeName="EBOOL" topologicalAddress="%Q0.2.20">
+			<comment>料斗加热器 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="powder_screw_start" typeName="EBOOL">
+			<comment>"溶药机螺杆启停"</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="rinsing_valve_1" typeName="EBOOL" topologicalAddress="%Q0.2.23">
+			<comment>1#反冲洗电动阀 1:打开/0:关闭</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_1_start" typeName="EBOOL">
+			<comment>1#计量泵启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="stirrer_3" typeName="EBOOL" topologicalAddress="%Q0.2.18">
+			<comment>3#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="stirrer_2" typeName="EBOOL" topologicalAddress="%Q0.2.17">
+			<comment>2#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="chemical_supply_valve_1" typeName="EBOOL" topologicalAddress="%Q0.2.21">
+			<comment>1#供药电动阀 1:关闭/0:打开</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="stirrer_1" typeName="EBOOL" topologicalAddress="%Q0.2.16">
+			<comment>1#搅拌机启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_fan_1" typeName="EBOOL" topologicalAddress="%Q0.2.26">
+			<comment>1#计量泵风扇 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="vibrator" typeName="EBOOL" topologicalAddress="%Q0.2.19">
+			<comment>振荡器 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_2_start" typeName="EBOOL">
+			<comment>2#计量泵启停</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="metering_pump_fan_2" typeName="EBOOL" topologicalAddress="%Q0.2.27">
+			<comment>2#计量泵风扇 1:启动/0:停止</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="water_in_valve_control_source" typeName="INT" topologicalAddress="%QW0.3.4.0">
+			<comment>溶药机进水电动阀4-20mA原始值-输出</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="auto_control" typeName="auto_control_parameter">
+			<comment>自动控制变量</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="water_in_valve_control" typeName="scale_real_to_int"></variables>
+		<variables name="TON_2" typeName="TON"></variables>
+		<variables name="TON_1" typeName="TON"></variables>
+		<variables name="water_pressure_source" typeName="INT" topologicalAddress="%IW0.3.2.0">
+			<comment>进水压力4-20mA原始值</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="scale_int_to_real_1" typeName="scale_int_to_real"></variables>
+		<variables name="water_contro_PIDFF" typeName="PIDFF"></variables>
+		<variables name="PIDFF_info" typeName="Info_PIDFF"></variables>
+		<variables name="powder_motor_auto_control" typeName="powder_screw_auto_control"></variables>
+		<variables name="PIDFF_parameter" typeName="Para_PIDFF"></variables>
+		<variables name="PIDFF_status" typeName="WORD"></variables>
+		<variables name="liquid_level_source" typeName="INT" topologicalAddress="%IW0.3.1.0">
+			<comment>储液池液位4-20mA原始值-输入</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+		<variables name="KMnO4_flow_source" typeName="DINT" topologicalAddress="%ID0.1.1.2">
+			<comment>高锰酸钾投加流量原始值</comment>
+		</variables>
+		<variables name="water_flow_source" typeName="DINT" topologicalAddress="%ID0.1.0.2">
+			<comment>进水水量原始值</comment>
+		</variables>
+		<variables name="water_flow_read" typeName="read_flow_meter"></variables>
+		<variables name="KMnO4_flow_read" typeName="read_flow_meter"></variables>
+		<variables name="TON_pump_low_level_stop" typeName="TON"></variables>
+		<variables name="pump_1_PID_info" typeName="Info_PIDFF"></variables>
+		<variables name="pump_2_PID_info" typeName="Info_PIDFF"></variables>
+		<variables name="pump_1_PID_parameter" typeName="Para_PIDFF"></variables>
+		<variables name="pump_2_PID_parameter" typeName="Para_PIDFF"></variables>
+		<variables name="pump_1_control_PIDFF" typeName="PIDFF"></variables>
+		<variables name="pump_2_control_PIDFF" typeName="PIDFF"></variables>
+		<variables name="pump_1_PIDFF_status" typeName="WORD"></variables>
+		<variables name="pump_2_PIDFF_status" typeName="WORD"></variables>
+		<variables name="pump_rinsing_1" typeName="TON"></variables>
+		<variables name="pump_rinsing_2" typeName="TON"></variables>
+		<variables name="accumulate_pump_1" typeName="TON"></variables>
+		<variables name="accumulate_pump_2" typeName="TON"></variables>
+		<variables name="accumulate_agitator" typeName="TON"></variables>
+		<variables name="accumulate_screw" typeName="TON"></variables>
+		<variables name="stirrer_second" typeName="reset_timer_and_count_second"></variables>
+		<variables name="pump_1_second" typeName="reset_timer_and_count_second"></variables>
+		<variables name="pump_2_second" typeName="reset_timer_and_count_second"></variables>
+		<variables name="screw_second" typeName="reset_timer_and_count_second"></variables>
+		<variables name="stirrer_minute" typeName="running_time_count_except_second"></variables>
+		<variables name="stirrer_hour" typeName="running_time_count_except_second"></variables>
+		<variables name="stirrer_day" typeName="running_time_count_except_second"></variables>
+		<variables name="stirrer_year" typeName="running_time_count_except_second"></variables>
+		<variables name="screw_minute" typeName="running_time_count_except_second"></variables>
+		<variables name="screw_hour" typeName="running_time_count_except_second"></variables>
+		<variables name="screw_day" typeName="running_time_count_except_second"></variables>
+		<variables name="screw_year" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_1_minute" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_1_hour" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_1_day" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_1_year" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_2_minute" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_2_hour" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_2_day" typeName="running_time_count_except_second"></variables>
+		<variables name="pump_2_year" typeName="running_time_count_except_second"></variables>
+		<variables name="flow_accumulate" typeName="TON"></variables>
+		<variables name="low_level_pump_stop" typeName="TON"></variables>
+		<variables name="membrane_rupture_counting_index" typeName="INT"></variables>
+		<variables name="pump_1_rupture_source" typeName="EBOOL" topologicalAddress="%i0.1.2.4">
+			<comment>泵1隔膜破裂报警原始值</comment>
+		</variables>
+		<variables name="pump_2_rupture_source" typeName="EBOOL" topologicalAddress="%i0.1.3.4">
+			<comment>泵2隔膜破裂报警原始值</comment>
+		</variables>
+		<variables name="membrane_rupture_1" typeName="TON"></variables>
+		<variables name="membrane_rupture_2" typeName="TON"></variables>
+		<variables name="kmno4_PLC_M340_data" typeName="system_parameter" topologicalAddress="%MW500">
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="kmno4_PLC_M340_read_status" typeName="modbus_status"></variables>
+		<variables name="KMnO4_PLC_communication_index" typeName="INT">
+			<comment>读高锰酸钾制备装置轮询用</comment>
+		</variables>
+		<variables name="kmno4_PLC_M340_address" typeName="modbus_address">
+			<comment>高锰酸钾PLC地址</comment>
+		</variables>
+		<variables name="kmno4_PLC_M340_index" typeName="INT">
+			<comment>高锰酸钾PLC读写索引</comment>
+		</variables>
+		<variables name="kmno4_PLC_M340_write_status" typeName="modbus_status"></variables>
+	</dataBlock>
+	<DDTSource DDTName="water_pressure" version="0.01" dateTime="dt#2022-09-23-08:54:16">
+		<attribute name="TypeSignatureCheckSumString" value="A292"></attribute>
+		<structure>
+			<variables name="pressure_in" typeName="REAL">
+				<comment>进水压力</comment>
+			</variables>
+			<variables name="low_pressure_setting" typeName="REAL">
+				<comment>低水压报警设置</comment>
+			</variables>
+			<variables name="low_pressure_alarm" typeName="BOOL">
+				<comment>低水压报警</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+	<DDTSource DDTName="storage_KMnO4" version="0.03" dateTime="dt#2022-09-22-14:32:25">
+		<comment>储液罐</comment>
+		<attribute name="TypeSignatureCheckSumString" value="E00F"></attribute>
+		<structure>
+			<variables name="liquid_level_KMnO4" typeName="REAL">
+				<comment>高锰酸钾池液位</comment>
+			</variables>
+			<variables name="liquid_high_setting" typeName="REAL">
+				<comment>高液位报警-设置</comment>
+			</variables>
+			<variables name="liquid_low_setting" typeName="REAL">
+				<comment>低液位报警-设置</comment>
+			</variables>
+			<variables name="start_setting" typeName="REAL">
+				<comment>开机液位-设置</comment>
+			</variables>
+			<variables name="stop_setting" typeName="REAL">
+				<comment>停机液位-设置</comment>
+			</variables>
+			<variables name="high_level_alarm" typeName="BOOL">
+				<comment>高液位报警</comment>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<comment>低液位报警</comment>
+			</variables>
+			<variables name="start_polymer_preparing" typeName="BOOL">
+				<comment>开机</comment>
+			</variables>
+			<variables name="stop_polymer_preparing" typeName="BOOL">
+				<comment>停机</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+	<DDTSource DDTName="PID_parameter" version="0.00" dateTime="dt#2022-09-30-16:48:06">
+		<attribute name="TypeSignatureCheckSumString" value="750C"></attribute>
+		<array>ARRAY[0..43] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_address" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="2437"></attribute>
+		<array>ARRAY[0..7] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_connect_brief" version="0.02" dateTime="dt#2022-10-25-12:52:17">
+		<attribute name="TypeSignatureCheckSumString" value="1097"></attribute>
+		<structure>
+			<variables name="activity" typeName="BOOL"></variables>
+			<variables name="cancel" typeName="BOOL"></variables>
+			<variables name="report" typeName="INT"></variables>
+		</structure>
+	</DDTSource>
+	<DDTSource DDTName="modbus_data_read" version="0.01" dateTime="dt#2022-10-24-17:08:21">
+		<attribute name="TypeSignatureCheckSumString" value="EC65"></attribute>
+		<array>ARRAY[0..10] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_data_write" version="0.00" dateTime="dt#2022-10-25-16:49:45">
+		<attribute name="TypeSignatureCheckSumString" value="1864"></attribute>
+		<array>ARRAY[0..1] OF INT</array>
+	</DDTSource>
+	<FBSource nameOfFBType="motor_data_read" version="0.07" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="6ECD"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="ECE4"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="cancel" typeName="BOOL">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+			<variables name="communication_index" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="data_read" typeName="modbus_data_read">
+				<attribute name="PositionPin" value="8"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="running_status" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="Fault_detection" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="connect_report" typeName="INT">
+				<attribute name="PositionPin" value="7"></attribute>
+			</variables>
+			<variables name="running_Hz" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+			<variables name="running_Hz_source" typeName="INT"></variables>
+			<variables name="read_status" typeName="modbus_status"></variables>
+		</privateLocalVariables>
+		<FBProgram name="modbus_read">
+			<STSource>
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+read_status[2] := 50;
+(*if it isn't reading busy, then read*)
+if activity = 0
+then
+READ_VAR (ADR := address_in_transform,
+          OBJ := '%MW',
+          NUM := first_object,
+          NB := object_number,
+          GEST := read_status,
+          RECP =&gt; data_read);
+(*cancel*)
+(*read_status[0].1 := 1;*)
+end_if;
+
+(*更新数据*)
+(*通信状态*)
+activity := read_status[0].0;
+cancel := read_status[0].1;
+connect_report := read_status[1];
+(*读取的数据*)
+running_status := data_read[0].2;
+Fault_detection := data_read[0].3;
+(*转换频率数据*)
+running_Hz_source := data_read[1];
+running_Hz := INT_TO_REAL(IN := running_Hz_source);
+running_Hz := running_Hz / 10.0;
+(*轮询*)
+communication_index := communication_index + 1;
+			
+
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="modbus_status" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="0C55"></attribute>
+		<array>ARRAY[0..3] OF INT</array>
+	</DDTSource>
+	<FBSource nameOfFBType="motor_data_write" version="0.05" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="F499"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="FED7"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="motor_start" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="malfunction_reset" typeName="BOOL">
+				<attribute name="PositionPin" value="11"></attribute>
+			</variables>
+			<variables name="motor_status" typeName="BOOL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="motor_Hz_setting" typeName="REAL">
+				<attribute name="PositionPin" value="7"></attribute>
+			</variables>
+			<variables name="motor_data_read" typeName="modbus_data_read">
+				<attribute name="PositionPin" value="8"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="data_write" typeName="modbus_data_write">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+			<variables name="communication_index" typeName="INT">
+				<attribute name="PositionPin" value="9"></attribute>
+			</variables>
+			<variables name="cancel" typeName="BOOL">
+				<attribute name="PositionPin" value="10"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="connect_report" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="setting_Hz_real" typeName="REAL"></variables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+			<variables name="write_status" typeName="modbus_status"></variables>
+		</privateLocalVariables>
+		<FBProgram name="modbus_write">
+			<STSource>
+setting_Hz_real := motor_Hz_setting * 10.0;
+if motor_start = 1 then
+    if motor_status = 1 then
+        (*启动*)
+        data_write[0] := 16#000F;
+        (*设置频率*)
+        data_write[1] := REAL_TO_INT(IN := setting_Hz_real);
+    else
+        if motor_data_read[0].6 = 1 then
+            (*shutdown*)
+            data_write[0] := 16#0006;
+        elsif motor_data_read[0].0 = 1 
+        and motor_data_read[0].1 = 0 
+        (*and motor_data_read[0].4 = 0 *)
+        and motor_data_read[0].5 = 1 
+        then
+            (*switch on *)
+            data_write[0] := 16#0007;
+        elsif motor_data_read[0].0 = 1 
+        and motor_data_read[0].1 = 1 
+        and motor_data_read[0].4 = 1 
+        and motor_data_read[0].5 = 1 
+        then
+            (*启动*)
+            data_write[0] := 16#000F;
+            (*设置频率*)
+            data_write[1] := REAL_TO_INT(IN := setting_Hz_real);
+        end_if;
+    end_if;
+else
+    if motor_status = 1 then
+        (*停止*)
+        data_write[0] := 16#0002;
+    end_if;
+end_if;
+(*故障复位*)
+if malfunction_reset = 1 then
+    (*malfunction_reset *)
+    data_write[0] := 16#0080;
+end_if;
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+write_status[2] := 50;
+if write_status[0].0 = 0 then
+    WRITE_VAR (ADR := address_in_transform,
+    OBJ := '%MW',
+    NUM := 8501,
+    NB := 2,
+    EMIS := data_write,
+    GEST := write_status);
+end_if;
+
+(*通信状态*)
+activity := write_status[0].0;
+cancel := write_status[0].1;
+connect_report := write_status[1];
+(*轮询*)
+communication_index := communication_index + 1;
+            
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="scale_real_to_int" version="0.01" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="8E45"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="18BF"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="INT">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_real_int">
+			<STSource>;
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_real := input_min;
+elsif input_value &gt; input_max then
+temp_real := input_max;
+else
+temp_real := input_value;
+end_if;
+
+(* 整型转浮点 *)
+(*temp_real := INT_TO_REAL (IN := temp_int);*)
+(*temp_min :=  input_min;*)
+(*temp_max :=  input_max;*)
+temp_min := INT_TO_REAL (IN := output_min);
+temp_max := INT_TO_REAL (IN := output_max);
+
+(* 转换 *)
+output_value := REAL_TO_INT((temp_real-input_min) / (input_max-input_min) * (temp_max - temp_min) + temp_min);
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="PID_flow_control" version="0.06" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="C959"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="EDBB"></attribute>
+		<inputParameters>
+			<variables name="liquid_flow" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="switch_auto_manual" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="water_in_PID_parameter" typeName="PID_parameter">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="control_output" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="liquid_flow_INT" typeName="INT"></variables>
+			<variables name="scale_real_to_int_1" typeName="scale_real_to_int"></variables>
+			<variables name="bool_to_ebool" typeName="EBOOL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="PID_valve_control">
+			<STSource>(* PID自动控制进水阀门开度 *)
+scale_real_to_int_1 (input_value := liquid_flow,
+                     input_min := 0.0,
+                     input_max := 3000.0,
+                     output_min := 0,
+                     output_max := 10000,
+                     output_value =&gt; liquid_flow_INT);
+(*将输入的bool格式转换为ebool格式*)
+bool_to_ebool := switch_auto_manual;
+
+(* PID过程函数 *)
+PID_INT (TAG := 'waterin_flow',
+         UNIT := 'L/h',
+         PV := liquid_flow_INT,
+         AUTO := bool_to_ebool,
+         PARA := water_in_PID_parameter,
+         OUT =&gt; control_output);
+
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="scale_int_to_real" version="0.01" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="FA28"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="5604"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="REAL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="REAL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_int_real">
+			<STSource>
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_int := input_min;
+elsif input_value &gt; input_max then
+temp_int := input_max;
+else
+temp_int := input_value;
+end_if;
+
+(* 整型转浮点 *)
+temp_real := INT_TO_REAL (IN := temp_int);
+temp_min := INT_TO_REAL (IN := input_min);
+temp_max := INT_TO_REAL (IN := input_max);
+
+(* 转换 *)
+output_value := (temp_real-temp_min) / (temp_max-temp_min) * (output_max-output_min) + output_min;
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="system_parameter" version="0.09" dateTime="dt#2023-05-22-13:29:25">
+		<attribute name="TypeSignatureCheckSumString" value="296E"></attribute>
+		<structure>
+			<variables name="control_switch" typeName="BOOL">
+				<comment>控制选择:远程/在地 0:在地 1:远程</comment>
+			</variables>
+			<variables name="emergency_stop" typeName="BOOL">
+				<comment>紧急停机 0:停机 1:正常开机</comment>
+			</variables>
+			<variables name="source_water_low_flow_alarm" typeName="BOOL">
+				<comment>源水低流量报警  1:流量过低 0:正常</comment>
+			</variables>
+			<variables name="low_pressure_alarm" typeName="BOOL">
+				<comment>低水压报警</comment>
+			</variables>
+			<variables name="high_level_alarm" typeName="BOOL">
+				<comment>高液位报警</comment>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<comment>低液位报警</comment>
+			</variables>
+			<variables name="powder_screw_maintain" typeName="BOOL">
+				<comment>溶药机螺杆检修</comment>
+			</variables>
+			<variables name="stirrer_1_maintain" typeName="BOOL">
+				<comment>1#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_2_maintain" typeName="BOOL">
+				<comment>2#搅拌机检修</comment>
+			</variables>
+			<variables name="stirrer_3_maintain" typeName="BOOL">
+				<comment>3#搅拌机检修</comment>
+			</variables>
+			<variables name="water_in_valve_maintain" typeName="BOOL">
+				<comment>进水电动阀及检修</comment>
+			</variables>
+			<variables name="water_pressure_sensor_maintain" typeName="BOOL">
+				<comment>压力变送器检修</comment>
+			</variables>
+			<variables name="pump_1_maintain" typeName="BOOL">
+				<comment>1#计量泵检修</comment>
+			</variables>
+			<variables name="pump_2_maintain" typeName="BOOL">
+				<comment>2#计量泵检修</comment>
+			</variables>
+			<variables name="pump_1_membrane_rupture" typeName="BOOL">
+				<comment>1#计量泵隔膜破裂 0:正常 1:破裂</comment>
+			</variables>
+			<variables name="pump_2_membrane_rupture" typeName="BOOL">
+				<comment>2#计量泵隔膜破裂 0:正常 1:破裂</comment>
+			</variables>
+			<variables name="powder_level_high" typeName="BOOL">
+				<comment>料斗物位高</comment>
+			</variables>
+			<variables name="powder_level_low" typeName="BOOL">
+				<comment>料斗物位低</comment>
+			</variables>
+			<variables name="powder_screw_status" typeName="BOOL">
+				<comment>"溶药机螺杆运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_1_status" typeName="BOOL">
+				<comment>"1#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_2_status" typeName="BOOL">
+				<comment>"2#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="stirrer_3_status" typeName="BOOL">
+				<comment>"3#搅拌机运行/停止" </comment>
+			</variables>
+			<variables name="pump_1_status" typeName="BOOL">
+				<comment>"1#计量泵运行/停止" </comment>
+			</variables>
+			<variables name="pump_2_status" typeName="BOOL">
+				<comment>"2#计量泵运行/停止" </comment>
+			</variables>
+			<variables name="powder_screw_malfunction" typeName="BOOL">
+				<comment>溶药机螺杆正常/故障</comment>
+			</variables>
+			<variables name="pump_1_malfunction" typeName="BOOL">
+				<comment>1#计量泵正常/故障</comment>
+			</variables>
+			<variables name="pump_2_malfunction" typeName="BOOL">
+				<comment>2#计量泵正常/故障</comment>
+			</variables>
+			<variables name="pump_rinsing_control_method" typeName="BOOL">
+				<comment>计量泵反冲洗，控制方式 1:自动/ 0: 手动</comment>
+			</variables>
+			<variables name="pump_rinsing" typeName="BOOL">
+				<comment>计量泵反冲洗,有计量泵在冲洗时2台计量泵会同时关闭</comment>
+			</variables>
+			<variables name="pump_1_rinsing" typeName="BOOL">
+				<comment>1#计量泵反冲洗</comment>
+			</variables>
+			<variables name="pump_2_rinsing" typeName="BOOL">
+				<comment>2#计量泵反冲洗</comment>
+			</variables>
+			<variables name="powder_screw_malfunction_reset" typeName="BOOL">
+				<comment>溶药机螺杆故障复位</comment>
+			</variables>
+			<variables name="pump_1_malfunction_reset" typeName="BOOL">
+				<comment>1#计量泵故障复位</comment>
+			</variables>
+			<variables name="pump_2_malfunction_reset" typeName="BOOL">
+				<comment>2#计量泵故障复位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_manual" typeName="BOOL">
+				<comment>1#供药电动阀手动控制 1:关闭/0:打开</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_manual" typeName="BOOL">
+				<comment>2#供药电动阀手动控制 1:关闭/0:打开</comment>
+			</variables>
+			<variables name="rinsing_valve_1_manual" typeName="BOOL">
+				<comment>1#反冲洗电动阀手动控制 1:打开/0:关闭</comment>
+			</variables>
+			<variables name="rinsing_valve_2_manual" typeName="BOOL">
+				<comment>2#反冲洗电动阀手动控制 1:打开/0:关闭</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_shut" typeName="BOOL">
+				<comment>1#供药电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_open" typeName="BOOL">
+				<comment>1#供药电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_shut" typeName="BOOL">
+				<comment>2#供药电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_open" typeName="BOOL">
+				<comment>2#供药电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_1_shut" typeName="BOOL">
+				<comment>1#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_1_open" typeName="BOOL">
+				<comment>1#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_2_shut" typeName="BOOL">
+				<comment>2#反冲洗电动阀 关到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="rinsing_valve_2_open" typeName="BOOL">
+				<comment>2#反冲洗电动阀 开到位 1:到位/0:未到位</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_shutting" typeName="BOOL">
+				<comment>1#供药电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_1_opening" typeName="BOOL">
+				<comment>1#供药电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_shutting" typeName="BOOL">
+				<comment>2#供药电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="chemical_supply_valve_2_opening" typeName="BOOL">
+				<comment>2#供药电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_1_shutting" typeName="BOOL">
+				<comment>1#反冲洗电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_1_opening" typeName="BOOL">
+				<comment>1#反冲洗电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_2_shutting" typeName="BOOL">
+				<comment>2#反冲洗电动阀 关阀中 1:关阀中/0:未动作</comment>
+			</variables>
+			<variables name="rinsing_valve_2_opening" typeName="BOOL">
+				<comment>2#反冲洗电动阀 开阀中 1:开阀中/0:未动作</comment>
+			</variables>
+			<variables name="pump_1_control_method" typeName="BOOL">
+				<comment>1#计量泵溶液投加控制方式 0:手动设置频率 1:自动-根据水量和溶液投率自动算</comment>
+			</variables>
+			<variables name="pump_2_control_method" typeName="BOOL">
+				<comment>2#计量泵溶液投加控制方式 0:手动设置频率 1:自动-根据水量和溶液投率自动算</comment>
+			</variables>
+			<variables name="metering_pump_1_manual_start" typeName="BOOL">
+				<comment>1#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_manual_start" typeName="BOOL">
+				<comment>2#计量泵手动控制下启停</comment>
+			</variables>
+			<variables name="solution_prepare_control_method" typeName="BOOL">
+				<comment>溶液制备控制方式 0:手动 1:自动</comment>
+			</variables>
+			<variables name="start_machine_level" typeName="BOOL">
+				<comment>溶药机开机液位</comment>
+			</variables>
+			<variables name="stop_machine_level" typeName="BOOL">
+				<comment>溶药机停机液位</comment>
+			</variables>
+			<variables name="start_polymer_preparing" typeName="BOOL">
+				<comment>溶药机开机</comment>
+			</variables>
+			<variables name="stop_polymer_preparing" typeName="BOOL">
+				<comment>溶药机停机</comment>
+			</variables>
+			<variables name="powder_screw_manual_start" typeName="BOOL">
+				<comment>"溶药机螺杆手动控制下启停"</comment>
+			</variables>
+			<variables name="stirrer_1_manual_start" typeName="BOOL">
+				<comment>1#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_2_manual_start" typeName="BOOL">
+				<comment>2#搅拌机启停</comment>
+			</variables>
+			<variables name="stirrer_3_manual_start" typeName="BOOL">
+				<comment>3#搅拌机启停</comment>
+			</variables>
+			<variables name="vibrator_manual_start" typeName="BOOL">
+				<comment>振荡器启停</comment>
+			</variables>
+			<variables name="powder_heater_manual_start" typeName="BOOL">
+				<comment>料斗加热器启停</comment>
+			</variables>
+			<variables name="stirrer_running_time_setting" typeName="INT">
+				<comment>设定搅拌机运行时间min</comment>
+			</variables>
+			<variables name="stirrer_stop_time_setting" typeName="INT">
+				<comment>设定搅拌机间歇时间min</comment>
+			</variables>
+			<variables name="pump_1_accumulate_second" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-秒</comment>
+			</variables>
+			<variables name="pump_1_accumulate_minute" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-分</comment>
+			</variables>
+			<variables name="pump_1_accumulate_hour" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-时</comment>
+			</variables>
+			<variables name="pump_1_accumulate_day" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-天</comment>
+			</variables>
+			<variables name="pump_1_accumulate_year" typeName="INT">
+				<comment>1#高锰酸钾投加泵运行时间统计-年</comment>
+			</variables>
+			<variables name="pump_2_accumulate_second" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-秒</comment>
+			</variables>
+			<variables name="pump_2_accumulate_minute" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-分</comment>
+			</variables>
+			<variables name="pump_2_accumulate_hour" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-时</comment>
+			</variables>
+			<variables name="pump_2_accumulate_day" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-天</comment>
+			</variables>
+			<variables name="pump_2_accumulate_year" typeName="INT">
+				<comment>2#高锰酸钾投加泵运行时间统计-年</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_second" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-秒</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_minute" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-分</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_hour" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-时</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_day" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-天</comment>
+			</variables>
+			<variables name="powder_screw_accumulate_year" typeName="INT">
+				<comment>溶药机螺杆运行时间统计-年</comment>
+			</variables>
+			<variables name="stirrer_accumulate_second" typeName="INT">
+				<comment>搅拌机运行时间统计-秒</comment>
+			</variables>
+			<variables name="stirrer_accumulate_minute" typeName="INT">
+				<comment>搅拌机运行时间统计-分</comment>
+			</variables>
+			<variables name="stirrer_accumulate_hour" typeName="INT">
+				<comment>搅拌机运行时间统计-时</comment>
+			</variables>
+			<variables name="stirrer_accumulate_day" typeName="INT">
+				<comment>搅拌机运行时间统计-天</comment>
+			</variables>
+			<variables name="stirrer_accumulate_year" typeName="INT">
+				<comment>搅拌机运行时间统计-年</comment>
+			</variables>
+			<variables name="liquid_level_KMnO4" typeName="REAL">
+				<comment>高锰酸钾池液位</comment>
+			</variables>
+			<variables name="source_water_flow" typeName="REAL">
+				<comment>源水流量 m3/h</comment>
+			</variables>
+			<variables name="pressure_in" typeName="REAL">
+				<comment>进水压力</comment>
+			</variables>
+			<variables name="water_in_flow" typeName="REAL">
+				<comment>进水流量L/h</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_target" typeName="REAL">
+				<comment>高锰酸钾计量泵计算投加流量 L/h 由程序自动计算得出</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_flow" typeName="REAL">
+				<comment>高锰酸钾计量泵投加流量 L/h</comment>
+			</variables>
+			<variables name="preparing_KMnO4_solution_accumulate" typeName="REAL">
+				<comment>高锰酸钾溶液累计制备量 L</comment>
+			</variables>
+			<variables name="KMnO4_solution_dosing_accumulate" typeName="REAL">
+				<comment>高锰酸钾计量泵累计投加量 L</comment>
+			</variables>
+			<variables name="KMnO4_powder_consumption_accumulation" typeName="REAL">
+				<comment>高锰酸钾粉料累计消耗量kg</comment>
+			</variables>
+			<variables name="KMnO4_dosing_mg_L" typeName="REAL">
+				<comment>高锰酸钾溶液投率 : Real;   // 单位：mg/L </comment>
+			</variables>
+			<variables name="solution_preparing_flow_setting" typeName="REAL">
+				<comment>高锰酸钾溶液制备流量 L/h</comment>
+			</variables>
+			<variables name="solution_concentration" typeName="REAL">
+				<comment>高锰酸钾浓度 : Real;   // % </comment>
+			</variables>
+			<variables name="KMnO4_density" typeName="REAL">
+				<comment>高锰酸钾密度 : Real;   // 单位：g/cm3 </comment>
+			</variables>
+			<variables name="source_water_flow_low_setting" typeName="REAL">
+				<comment>源水低流量 : Real;   // 单位：m3/h，原水流量低于此值自动停泵 </comment>
+			</variables>
+			<variables name="water_input_valve_position" typeName="REAL">
+				<comment>"溶药机进水电动阀开度" 0-100% real</comment>
+			</variables>
+			<variables name="powder_screw_running_Hz" typeName="REAL">
+				<comment>溶药机螺杆运行频率</comment>
+			</variables>
+			<variables name="metering_pump_1_running_Hz" typeName="REAL">
+				<comment>1#计量泵运行频率</comment>
+			</variables>
+			<variables name="metering_pump_2_running_Hz" typeName="REAL">
+				<comment>2#计量泵运行频率</comment>
+			</variables>
+			<variables name="liquid_high_setting" typeName="REAL">
+				<comment>高液位报警-设置</comment>
+			</variables>
+			<variables name="liquid_low_setting" typeName="REAL">
+				<comment>低液位报警-设置</comment>
+			</variables>
+			<variables name="start_setting" typeName="REAL">
+				<comment>开机液位-设置</comment>
+			</variables>
+			<variables name="stop_setting" typeName="REAL">
+				<comment>停机液位-设置</comment>
+			</variables>
+			<variables name="low_pressure_setting" typeName="REAL">
+				<comment>低水压报警设置</comment>
+			</variables>
+			<variables name="powder_screw_motor_Hz_manual" typeName="REAL">
+				<comment>手动控制下进料电机频率Hz设置</comment>
+			</variables>
+			<variables name="waterin_valve_manual_setting" typeName="REAL">
+				<comment>溶药机进水电动阀开度手动设定0-100% real</comment>
+			</variables>
+			<variables name="metering_pump_1_Hz_manual_setting" typeName="REAL">
+				<comment>1#计量泵频率设定 Hz</comment>
+			</variables>
+			<variables name="metering_pump_2_Hz_manual_setting" typeName="REAL">
+				<comment>2#计量泵频率设定 Hz</comment>
+			</variables>
+			<variables name="metering_pump_1_stroke_length" typeName="REAL">
+				<comment>1#计量泵冲程长度 %</comment>
+			</variables>
+			<variables name="metering_pump_2_stroke_length" typeName="REAL">
+				<comment>2#计量泵冲程长度 %</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+	<FBSource nameOfFBType="pump_dosing_manual" version="0.02" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="6CBF"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="3BE2"></attribute>
+		<inputParameters>
+			<variables name="start_stop_in" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="pump_maintain" typeName="BOOL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="pump_rinsing" typeName="BOOL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="chemical_supply_valve_open" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="source_water_low_flow_alarm" typeName="BOOL">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="start_stop_out" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="low_level_stop" typeName="BOOL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="pump_manual_control">
+			<STSource>
+(*泵启停*)
+if low_level_alarm = 1 then
+    start_stop_out := 0 ;
+else
+    if pump_maintain = 1 then
+        start_stop_out := 0 ;
+    else
+        if pump_rinsing = 1 then
+            start_stop_out := 0 ;
+        else
+            if chemical_supply_valve_open = 0 then
+                start_stop_out := 0 ;
+            else
+                if source_water_low_flow_alarm = 1 then
+                    start_stop_out := 0 ;
+                else
+                    start_stop_out := start_stop_in;
+                END_IF;
+            END_IF;
+        END_IF;
+    END_IF;
+END_IF;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="auto_control_parameter" version="0.07" dateTime="dt#2022-12-06-15:54:19">
+		<attribute name="TypeSignatureCheckSumString" value="7E63"></attribute>
+		<structure>
+			<variables name="powder_screw_auto_start" typeName="BOOL">
+				<comment>"溶药机螺杆自动控制下启停"</comment>
+			</variables>
+			<variables name="metering_pump_1_auto_start" typeName="BOOL">
+				<comment>1#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_auto_start" typeName="BOOL">
+				<comment>2#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_1_auto_start" typeName="BOOL">
+				<comment>1#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_2_auto_start" typeName="BOOL">
+				<comment>2#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_3_auto_start" typeName="BOOL">
+				<comment>3#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="rinsing_temp_1" typeName="BOOL">
+				<comment>1#反冲洗中间变量</comment>
+			</variables>
+			<variables name="rinsing_temp_2" typeName="BOOL">
+				<comment>2#反冲洗中间变量</comment>
+			</variables>
+			<variables name="stirrer_running_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_running_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_stop_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_timing_reset" typeName="BOOL">
+				<comment>搅拌机计时，复位</comment>
+			</variables>
+			<variables name="stirrer_timing_stop" typeName="BOOL">
+				<comment>搅拌机计时，停止</comment>
+			</variables>
+			<variables name="pump_1_timing_reset" typeName="BOOL">
+				<comment>1#泵计时，复位</comment>
+			</variables>
+			<variables name="pump_1_timing_stop" typeName="BOOL">
+				<comment>1#泵计时，停止</comment>
+			</variables>
+			<variables name="pump_2_timing_reset" typeName="BOOL">
+				<comment>2#泵计时，复位</comment>
+			</variables>
+			<variables name="pump_2_timing_stop" typeName="BOOL">
+				<comment>2#泵计时，停止</comment>
+			</variables>
+			<variables name="screw_timing_reset" typeName="BOOL">
+				<comment>螺旋进料器计时，复位</comment>
+			</variables>
+			<variables name="screw_timing_stop" typeName="BOOL">
+				<comment>螺旋进料器计时，停止</comment>
+			</variables>
+			<variables name="stirrer_status" typeName="BOOL">
+				<comment>PLC内部控制中间参数:搅拌机运行/停止</comment>
+			</variables>
+			<variables name="storage_tank_low_level_trigger" typeName="BOOL">
+				<comment>储液池低液位延时动作，辅助用</comment>
+			</variables>
+			<variables name="stirrer_running_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机运行计时时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机间歇计时时间</comment>
+			</variables>
+			<variables name="stirrer_running_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机运行时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机间歇时间</comment>
+			</variables>
+			<variables name="powder_motor_Hz_auto_setting" typeName="REAL">
+				<comment>进料电机频率Hz</comment>
+			</variables>
+			<variables name="pump_1_motor_Hz_auto_setting" typeName="REAL">
+				<comment>泵1电机频率Hz</comment>
+			</variables>
+			<variables name="pump_2_motor_Hz_auto_setting" typeName="REAL">
+				<comment>泵2电机频率Hz</comment>
+			</variables>
+			<variables name="pump_1_flow_setpoint" typeName="REAL">
+				<comment>泵1流量PID setpoint设定值L/h</comment>
+			</variables>
+			<variables name="pump_2_flow_setpoint" typeName="REAL">
+				<comment>泵2流量PID setpoint设定值L/h</comment>
+			</variables>
+			<variables name="water_in_valve_auto_setting" typeName="REAL">
+				<comment>进水阀开度自动控制%</comment>
+			</variables>
+			<variables name="water_input_flow_setpoint" typeName="REAL">
+				<comment>进水流量PID控制setpoint</comment>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+	<FBSource nameOfFBType="powder_screw_auto_control" version="0.02" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="C170"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="3085"></attribute>
+		<inputParameters>
+			<variables name="powder_feeder_capacity" typeName="REAL">
+				<comment>螺旋进料器投粉能力 kg/h</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="solution_concentration" typeName="REAL">
+				<comment>高锰酸钾浓度%</comment>
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="powder_motor_frequency_setting" typeName="REAL">
+				<comment>进料电机频率Hz</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="powder_dosing_flow" typeName="REAL">
+				<comment>溶药机固体加粉量kg/h</comment>
+			</variables>
+		</privateLocalVariables>
+		<FBProgram name="frequency_output">
+			<STSource>
+(*计算溶药机固体加粉量   制备量L/h*)
+(*高锰酸钾溶液投率mg/L  高锰酸钾密度g/cm3  加粉量kg/h  高锰酸钾溶液浓度%*)
+	powder_dosing_flow := solution_prepare_flow *
+    (*"PLC内部控制".高锰酸钾密度 *)
+	    solution_concentration / 100.0;
+	
+   (*自动计算螺杆运行频率*) 
+   (*将计算出的固体加粉量， 对照50Hz时进料螺杆的进料能力， 计算出进料螺杆应该运行的频率*) 
+	    powder_motor_frequency_setting := powder_dosing_flow / powder_feeder_capacity * 50.0;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="read_flow_meter" version="0.04" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="634D"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="2DBF"></attribute>
+		<inputParameters>
+			<variables name="frequency_source" typeName="DINT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="K_factor" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="flow_output" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="frequency_source_real" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="frequency_to_flow">
+			<STSource>
+(*频率转换为real类型*)
+frequency_source_real := DINT_TO_REAL(IN := frequency_source);
+(*每脉冲0.001L，频率为Hz*，流量转换为L/h*)
+flow_output := frequency_source_real * K_factor * 60.0 * 60.0;                
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="reset_timer_and_count_second" version="0.04" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="7FBD"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="60EF"></attribute>
+		<inputParameters>
+			<variables name="timing_stop" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="second" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="timing_reset" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inOutParameters>
+		<FBProgram name="counting">
+			<STSource>
+	IF timing_stop = 1 THEN
+	    second := second + 1;
+	    timing_reset := 0;
+    else
+        timing_reset := 1;
+	END_IF;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="running_time_count_except_second" version="0.03" dateTime="dt#2022-12-15-16:13:05">
+		<attribute name="TypeCodeCheckSumString" value="6775"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="BADB"></attribute>
+		<inputParameters>
+			<variables name="limit" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="smaller_unit" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="bigger_unit" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inOutParameters>
+		<FBProgram name="compute">
+			<STSource>
+if smaller_unit &gt;= limit then
+    bigger_unit := bigger_unit + 1;
+    smaller_unit := 0;
+end_if;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+</VariablesExchangeFile>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-25-13:30:36" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.67" dateTime="date_and_time#2022-10-24-17:9:48"></contentHeader>
+	<program>
+		<identProgram name="modbus_test" type="SR" task="MAST"></identProgram>
+		<STSource>pump_1_address := ADDM (IN := '0.0.0.4.MBS');
+(* Time out duration setting*)
+pump_1_read_status[2] := 50;
+(*if it isn't reading busy, then read*)
+if pump_1_read_status[0].0 = 0
+(*and*)
+(*Modbus_communication_index = 0*)
+then
+READ_VAR (ADR := pump_1_address,
+          OBJ := '%MW',
+          NUM := 3201,
+          NB := 10,
+          GEST := pump_1_read_status,
+          RECP =&gt; pump_1_data_read);
+(*cancel*)
+(*pump_1_read_status[0].1 := 1;*)
+(*Modbus_communication_index := 1;*)
+end_if;
+
+(*Switch on*)
+(*pump_1_data_write[0].0 := 1;*)
+(*启动*)
+(*pump_1_data_write[0].3 := 1;*)
+(*pump_1_data_write[0].8 := 1;*)
+(*设置频率*)
+(*pump_1_data_write[1] := 300;*)
+(*pump_1_data_write[2] := 0;*)
+
+(* Time out duration setting*)
+(*pump_1_write_status[2] := 50;*)
+(*if Modbus_communication_index = 1*)
+(*and*)
+(*pump_1_write_status[0].0 = 0*)
+(*then*)
+(*WRITE_VAR (ADR := pump_1_address,*)
+           (*OBJ := '%MW',*)
+           (*NUM := 8501,*)
+           (*NB := 2,*)
+           (*EMIS := pump_1_data_write,*)
+           (*GEST := pump_1_write_status);*)
+(*pump_1_write_status[0].1 := 1;*)
+(*Modbus_communication_index := 0;*)
+(*end_if;*)
+
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="pump_1_address" typeName="modbus_address"></variables>
+		<variables name="pump_1_read_status" typeName="modbus_connect_brief"></variables>
+		<variables name="pump_1_data_read" typeName="modbus_data_read"></variables>
+	</dataBlock>
+	<DDTSource DDTName="modbus_address" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="2437"></attribute>
+		<array>ARRAY[0..7] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_connect_brief" version="0.02" dateTime="dt#2022-10-25-12:52:17">
+		<attribute name="TypeSignatureCheckSumString" value="1097"></attribute>
+		<structure>
+			<variables name="activity" typeName="BOOL"></variables>
+			<variables name="cancel" typeName="BOOL"></variables>
+			<variables name="report" typeName="INT"></variables>
+		</structure>
+	</DDTSource>
+	<DDTSource DDTName="modbus_data_read" version="0.01" dateTime="dt#2022-10-24-17:08:21">
+		<attribute name="TypeSignatureCheckSumString" value="EC65"></attribute>
+		<array>ARRAY[0..10] OF INT</array>
+	</DDTSource>
+</STExchangeFile>

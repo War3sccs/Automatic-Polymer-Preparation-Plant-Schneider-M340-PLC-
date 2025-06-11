@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-11-25-12:44:11" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.223" dateTime="date_and_time#2022-10-28-16:21:14"></contentHeader>
+	<FBSource nameOfFBType="pump_dosing_manual" version="0.02" dateTime="dt#2022-11-08-14:30:46">
+		<attribute name="TypeCodeCheckSumString" value="E689"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="3DF1"></attribute>
+		<inputParameters>
+			<variables name="start_stop_in" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="low_level_alarm" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="pump_maintain" typeName="BOOL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="pump_rinsing" typeName="BOOL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="chemical_supply_valve_open" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="source_water_low_flow_alarm" typeName="BOOL">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="start_stop_out" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="low_level_stop" typeName="BOOL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="pump_manual_control">
+			<STSource>
+(*泵启停*)
+if low_level_alarm = 1 then
+    start_stop_out := 0 ;
+else
+    if pump_maintain = 1 then
+        start_stop_out := 0 ;
+    else
+        if pump_rinsing = 1 then
+            start_stop_out := 0 ;
+        else
+            if chemical_supply_valve_open = 0 then
+                start_stop_out := 0 ;
+            else
+                if source_water_low_flow_alarm = 1 then
+                    start_stop_out := 0 ;
+                else
+                    start_stop_out := start_stop_in;
+                END_IF;
+            END_IF;
+        END_IF;
+    END_IF;
+END_IF;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

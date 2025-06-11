@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-3-14:31:2" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.15" dateTime="date_and_time#2022-9-30-17:20:38"></contentHeader>
+	<FBSource nameOfFBType="PID_flow_control" version="0.05" dateTime="dt#2022-09-30-17:17:51">
+		<attribute name="TypeCodeCheckSumString" value="7C83"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="D4B5"></attribute>
+		<inputParameters>
+			<variables name="liquid_flow" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="switch_auto_manual" typeName="EBOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="water_in_PID_parameter" typeName="PID_parameter">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="control_output" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="liquid_flow_INT" typeName="INT"></variables>
+			<variables name="scale_real_to_int_1" typeName="scale_real_to_int"></variables>
+		</privateLocalVariables>
+		<FBProgram name="PID_valve_control">
+			<STSource>(* PID自动控制进水阀门开度 *)
+scale_real_to_int_1 (input_value := liquid_flow,
+                     input_min := 0.0,
+                     input_max := 3000.0,
+                     output_min := 0,
+                     output_max := 10000,
+                     output_value =&gt; liquid_flow_INT);
+
+(* PID过程函数 *)
+PID_INT (TAG := 'waterin_flow',
+         UNIT := 'L/h',
+         PV := liquid_flow_INT,
+         AUTO := switch_auto_manual,
+         PARA := water_in_PID_parameter,
+         OUT =&gt; control_output);
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="PID_parameter" version="0.00" dateTime="dt#2022-09-30-16:48:06">
+		<attribute name="TypeSignatureCheckSumString" value="750C"></attribute>
+		<array>ARRAY[0..43] OF INT</array>
+	</DDTSource>
+	<FBSource nameOfFBType="scale_real_to_int" version="0.01" dateTime="dt#2022-09-30-17:00:54">
+		<attribute name="TypeCodeCheckSumString" value="8E45"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="18BF"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="INT">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_real_int">
+			<STSource>;
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_real := input_min;
+elsif input_value &gt; input_max then
+temp_real := input_max;
+else
+temp_real := input_value;
+end_if;
+
+(* 整型转浮点 *)
+(*temp_real := INT_TO_REAL (IN := temp_int);*)
+(*temp_min :=  input_min;*)
+(*temp_max :=  input_max;*)
+temp_min := INT_TO_REAL (IN := output_min);
+temp_max := INT_TO_REAL (IN := output_max);
+
+(* 转换 *)
+output_value := REAL_TO_INT((temp_real-input_min) / (input_max-input_min) * (temp_max - temp_min) + temp_min);
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

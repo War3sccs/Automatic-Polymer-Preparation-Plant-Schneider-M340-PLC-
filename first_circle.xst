@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-25-13:12:43" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.67" dateTime="date_and_time#2022-10-24-17:9:48"></contentHeader>
+	<program>
+		<identProgram name="first_circle" type="SR" task="MAST"></identProgram>
+		<STSource>(*溶液制备*)
+(*溶液制备控制方式 0:手动 1:自动*)
+(*remote_control.solution_prepare_control_method := 0;*)
+(*local_control.solution_prepare_control_method := 0;*)
+(*制备系数设置*)
+(*高锰酸钾溶液制备流量 L/h*)
+(*local_control.solution_preparing_flow_setting := 1000;*)
+(*remote_control.solution_preparing_flow_setting := 1000;*)
+(*高锰酸钾浓度 : Real;   // % *)
+(*local_control.solution_concentration := 1;*)
+(*remote_control.solution_concentration := 1;*)
+(*高锰酸钾密度 : Real;   // 单位：g/cm3 *)
+(*local_control.KMnO4_density := 2.7;*)
+(*remote_control.KMnO4_density := 2.7;*)
+(*高、低、开机、停机液位*)
+(*local_control.liquid_high_setting := 1.1;*)
+(*local_control.liquid_low_setting := 0.2;*)
+(*local_control.start_setting := 0.5;*)
+(*local_control.stop_setting := 0.9;*)
+(*remote_control.liquid_high_setting := 1.1;*)
+(*remote_control.liquid_low_setting := 0.2;*)
+(*remote_control.start_setting := 0.5;*)
+(*remote_control.stop_setting := 0.9;*)
+(*手动控制下进料电机频率Hz设置*)
+(*local_control.powder_screw_motor_Hz_manual := 0;*)
+(*remote_control.powder_screw_motor_Hz_manual := 0;*)
+(*低水压报警设置*)
+(*local_control.low_pressure_setting := 2;*)
+(*remote_control.low_pressure_setting := 2;*)
+(*溶药机进水电动阀开度手动设定0-100% real*)
+(*local_control.waterin_valve_manual_setting := 0;*)
+(*remote_control.waterin_valve_manual_setting := 0;*)
+
+(*溶液投加*)
+(*高锰酸钾溶液投率 : Real;   // 单位：mg/L *)
+(*local_control.KMnO4_dosing_mg_L := 1;*)
+(*remote_control.KMnO4_dosing_mg_L := 1;*)
+
+(*"PLC内部控制".搅拌机运行时间计时分钟复位*)
+(*"PLC内部控制".搅拌机运行时间计时到时间复位*)
+auto_control.stirrer_running_time_reset :=1;
+auto_control.stirrer_running_timing := 1;
+
+(*反冲洗设置初始化*)
+auto_control.rinsing_temp_1 := 0;
+auto_control.rinsing_temp_2 := 0;
+
+(*modbus连接初始化*)
+Modbus_communication_index := 0;
+pump_1_read_status.cancel := 0;
+pump_2_read_status.cancel := 0;
+powder_screw_read_status.cancel := 0;
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="auto_control" typeName="auto_control_parameter">
+			<comment>自动控制变量</comment>
+			<attribute name="IsVariableHMI" value="-1"></attribute>
+		</variables>
+	</dataBlock>
+	<DDTSource DDTName="auto_control_parameter" version="0.01" dateTime="dt#2022-09-29-20:55:18">
+		<attribute name="TypeSignatureCheckSumString" value="1853"></attribute>
+		<structure>
+			<variables name="powder_screw_auto_start" typeName="BOOL">
+				<comment>"溶药机螺杆自动控制下启停"</comment>
+			</variables>
+			<variables name="metering_pump_1_auto_start" typeName="BOOL">
+				<comment>1#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="metering_pump_2_auto_start" typeName="BOOL">
+				<comment>2#计量泵自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_1_auto_start" typeName="BOOL">
+				<comment>1#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_2_auto_start" typeName="BOOL">
+				<comment>2#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="stirrer_3_auto_start" typeName="BOOL">
+				<comment>3#搅拌机自动控制下启停</comment>
+			</variables>
+			<variables name="rinsing_temp_1" typeName="BOOL">
+				<comment>1#反冲洗中间变量</comment>
+			</variables>
+			<variables name="rinsing_temp_2" typeName="BOOL">
+				<comment>2#反冲洗中间变量</comment>
+			</variables>
+			<variables name="stirrer_running_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_running_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机运行时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_reset" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟复位</comment>
+			</variables>
+			<variables name="stirrer_stop_timing" typeName="BOOL">
+				<comment>"PLC内部控制".搅拌机间歇时间计时分钟计时，到时间</comment>
+			</variables>
+			<variables name="stirrer_status" typeName="BOOL">
+				<comment>PLC内部控制中间参数:搅拌机运行/停止</comment>
+			</variables>
+			<variables name="stirrer_running_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机运行计时时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time_counting" typeName="TIME">
+				<comment>PLC内部控制中间参数:搅拌机间歇计时时间</comment>
+			</variables>
+			<variables name="stirrer_running_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机运行时间</comment>
+			</variables>
+			<variables name="stirrer_stop_time" typeName="INT">
+				<comment>"PLC内部控制".搅拌机间歇时间</comment>
+			</variables>
+			<variables name="powder_motor_Hz_auto_setting" typeName="REAL">
+				<comment>进料电机频率Hz</comment>
+			</variables>
+			<variables name="water_input_flow_setpoint" typeName="REAL">
+				<comment>进水流量PID控制setpoint</comment>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+</STExchangeFile>

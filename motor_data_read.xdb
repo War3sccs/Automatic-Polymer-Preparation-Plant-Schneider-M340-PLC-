@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-10-26-11:48:1" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.91" dateTime="date_and_time#2022-10-25-14:0:0"></contentHeader>
+	<FBSource nameOfFBType="motor_data_read" version="0.05" dateTime="dt#2022-10-25-15:27:43">
+		<attribute name="TypeCodeCheckSumString" value="6ECD"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="4D18"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="cancel" typeName="BOOL">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+			<variables name="communication_index" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="data_read" typeName="modbus_data_read">
+				<attribute name="PositionPin" value="8"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="running_status" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="Fault_detection" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="connect_report" typeName="INT">
+				<attribute name="PositionPin" value="7"></attribute>
+			</variables>
+			<variables name="running_Hz" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+			<variables name="running_Hz_source" typeName="INT"></variables>
+			<variables name="read_status" typeName="modbus_status"></variables>
+		</privateLocalVariables>
+		<FBProgram name="modbus_read">
+			<STSource>
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+read_status[2] := 50;
+(*if it isn't reading busy, then read*)
+if activity = 0
+then
+READ_VAR (ADR := address_in_transform,
+          OBJ := '%MW',
+          NUM := first_object,
+          NB := object_number,
+          GEST := read_status,
+          RECP =&gt; data_read);
+(*cancel*)
+(*read_status[0].1 := 1;*)
+end_if;
+
+(*更新数据*)
+(*通信状态*)
+activity := read_status[0].0;
+cancel := read_status[0].1;
+connect_report := read_status[1];
+(*读取的数据*)
+running_status := data_read[0].2;
+Fault_detection := data_read[0].3;
+(*转换频率数据*)
+running_Hz_source := data_read[1];
+running_Hz := INT_TO_REAL(IN := running_Hz_source);
+running_Hz := running_Hz / 10.0;
+(*轮询*)
+communication_index := communication_index + 1;
+			
+
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="modbus_address" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="2437"></attribute>
+		<array>ARRAY[0..7] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_status" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="0C55"></attribute>
+		<array>ARRAY[0..3] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_data_read" version="0.01" dateTime="dt#2022-10-24-17:08:21">
+		<attribute name="TypeSignatureCheckSumString" value="EC65"></attribute>
+		<array>ARRAY[0..10] OF INT</array>
+	</DDTSource>
+</FBExchangeFile>

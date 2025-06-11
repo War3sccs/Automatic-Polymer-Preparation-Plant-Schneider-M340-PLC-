@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<VariablesExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-12-1-16:40:12" content="变量源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.266" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<dataBlock>
+		<variables name="pump_rinsing_1" typeName="TON"></variables>
+		<variables name="pump_rinsing_2" typeName="TON"></variables>
+		<variables name="TON_2" typeName="TON"></variables>
+		<variables name="TON_1" typeName="TON"></variables>
+		<variables name="cumulate_pump_1" typeName="TON"></variables>
+		<variables name="cumulate_pump_2" typeName="TON"></variables>
+		<variables name="cumulate_agitator" typeName="TON"></variables>
+		<variables name="cumulate_screw" typeName="TON"></variables>
+		<variables name="water_contro_PIDFF" typeName="PIDFF"></variables>
+		<variables name="TON_pump_low_level_stop" typeName="TON"></variables>
+		<variables name="pump_1_control_PIDFF" typeName="PIDFF"></variables>
+		<variables name="pump_2_control_PIDFF" typeName="PIDFF"></variables>
+		<variables name="TON_3" typeName="TON"></variables>
+	</dataBlock>
+</VariablesExchangeFile>

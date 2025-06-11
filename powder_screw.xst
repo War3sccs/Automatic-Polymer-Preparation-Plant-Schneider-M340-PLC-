@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-9-26-16:7:43" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.7" dateTime="date_and_time#2022-9-23-8:55:52"></contentHeader>
+	<program>
+		<identProgram name="water_press_deal" type="SR" task="MAST"></identProgram>
+		<STSource>(* 将原始数据转换为水压值 *)
+
+(*//同步溶液制备量*)
+IF "上位机通信".控制权限 = 0 THEN
+    "上位机通信".溶药机溶液制备量 := "溶药机溶液制备量";
+ELSE
+    "溶药机溶液制备量" := "上位机通信".溶药机溶液制备量;
+END_IF;
+
+(*//计算溶药机固体加粉量   制备量L/h*)
+(*//高锰酸钾溶液投率mg/L  高锰酸钾密度g/cm3  加粉量kg/h  高锰酸钾溶液浓度%*)
+"PLC内部控制".溶药机固体加粉量 := "PLC内部控制".溶药机溶液制备量 *
+(    *//"PLC内部控制".高锰酸钾密度 **)
+    "PLC内部控制".高锰酸钾浓度 / 100;
+
+IF "上位机通信".自动控制设定方式 = 1 THEN
+(    *//自动计算螺杆运行频率*)
+(    *//将计算出的固体加粉量， 对照50Hz时进料螺杆的进料能力， 计算出进料螺杆应该运行的频率*)
+    "溶药机螺杆运行频率AO" :=
+    ROUND_INT(27648.0 * "PLC内部控制".溶药机固体加粉量 / #powder_feeder_capacity);
+ELSE
+(    *//触摸屏手动设定频率*)
+    "溶药机螺杆运行频率AO" := "PLC内部控制".溶药机螺杆设定频率;
+END_IF;
+
+</STSource>
+	</program>
+	<dataBlock>
+		<variables name="water_pressure_source" typeName="INT" topologicalAddress="%IW0.3.0.1">
+			<attribute name="TimeStampSource" value="0"></attribute>
+		</variables>
+		<variables name="scale_int_to_real_1" typeName="scale_int_to_real"></variables>
+		<variables name="water_pressure_data" typeName="water_pressure">
+			<comment>进水压力</comment>
+		</variables>
+	</dataBlock>
+	<FBSource nameOfFBType="scale_int_to_real" version="0.01" dateTime="dt#2022-09-22-22:06:21">
+		<attribute name="TypeCodeCheckSumString" value="26BB"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="5604"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="REAL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="REAL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_int_real">
+			<STSource>
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_int := 0;
+elsif input_value &gt; input_max then
+temp_int := 10000;
+else
+temp_int := input_value;
+end_if;
+
+(* 整型转浮点 *)
+temp_real := INT_TO_REAL (IN := temp_int);
+temp_min := INT_TO_REAL (IN := input_min);
+temp_max := INT_TO_REAL (IN := input_max);
+
+(* 转换 *)
+output_value := (temp_real-temp_min) / (temp_max-temp_min) * (output_max-output_min) + output_min;
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="water_pressure" version="0.01" dateTime="dt#2022-09-23-08:54:16">
+		<attribute name="TypeSignatureCheckSumString" value="A292"></attribute>
+		<structure>
+			<variables name="pressure_in" typeName="REAL">
+				<comment>进水压力</comment>
+			</variables>
+			<variables name="low_pressure_setting" typeName="REAL">
+				<comment>低水压报警设置</comment>
+			</variables>
+			<variables name="low_pressure_alarm" typeName="BOOL">
+				<comment>低水压报警</comment>
+			</variables>
+		</structure>
+	</DDTSource>
+</STExchangeFile>

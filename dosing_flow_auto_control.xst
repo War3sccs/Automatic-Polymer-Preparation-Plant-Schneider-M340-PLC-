@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<STExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-11-28-13:34:19" content="结构化的源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.231" dateTime="date_and_time#2022-10-28-16:21:14"></contentHeader>
+	<program>
+		<identProgram name="dosing_flow_auto_control_pump_1" type="SR" task="MAST"></identProgram>
+		<STSource>
+(*计量泵投加流量自动控制*)
+
+(*1#计量泵*)
+(*完全PID控制程序*)
+(*PID控制参数*)
+(*流量计测量范围*)
+pump_1_PID_parameter.pv_inf := 0.0;
+pump_1_PID_parameter.pv_sup := 400.0;
+(*计量泵投加范围*)
+pump_1_PID_parameter.out_inf := 0.0;
+pump_1_PID_parameter.out_sup := 50.0;
+pump_1_PID_parameter.rev_dir := 0;
+pump_1_PID_parameter.mix_par := 1;
+pump_1_PID_parameter.aw_type := 1;
+pump_1_PID_parameter.en_rcpy := 0;
+(*P参数*)
+pump_1_PID_parameter.kp := 0.00001;
+(*积分作用时间*)
+pump_1_PID_parameter.ti := T#10s;
+(*微分作用时间*)
+pump_1_PID_parameter.td := T#0s;
+(*微分系数*)
+pump_1_PID_parameter.kd := 1.0;
+pump_1_PID_parameter.pv_dev := 1;
+pump_1_PID_parameter.bump := 0;
+(*死区设置，在死区内的操作*)
+pump_1_PID_parameter.dband := 0.01;
+pump_1_PID_parameter.gain_kp := 0.2;
+pump_1_PID_parameter.ovs_att := 0.0;
+pump_1_PID_parameter.outbias := 0.0;
+(*输出最大最小值 *)
+pump_1_PID_parameter.out_min := 0.0;
+pump_1_PID_parameter.out_max := 50.0;
+(*增速限制*)
+pump_1_PID_parameter.outrate := 5.0;
+
+(*PID控制*)
+pump_1_control_PIDFF(PV := local_control.KMnO4_solution_dosing_flow,
+        SP := local_control.KMnO4_solution_dosing_target,
+        (*FF := *)
+        (*RCPY :=*)
+        MAN_AUTO := local_control.pump_1_control_method,
+        PARA := pump_1_PID_parameter,
+        (*TR_I :=*)
+        TR_S := 0,
+        (*OUTD :=*)
+        (*MA_O :=*)
+        INFO =&gt; pump_1_PID_info,
+        STATUS =&gt; pump_1_PIDFF_status,
+        OUT := auto_control.auto_control.pump_1_motor_Hz_auto_setting);
+
+		</STSource>
+	</program>
+</STExchangeFile>

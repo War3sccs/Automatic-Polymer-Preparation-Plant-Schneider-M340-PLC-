@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-9-29-16:52:29" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.12" dateTime="date_and_time#2022-9-29-16:23:41"></contentHeader>
+	<FBSource nameOfFBType="solution_preparing_control" version="0.00" dateTime="dt#1990-01-01-00:00:00">
+		<attribute name="TypeCodeCheckSumString"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="F0B8"></attribute>
+		<inputParameters>
+			<variables name="powder_screw_status" typeName="BOOL">
+                <comment>溶药机螺杆 运行/停止</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+                <comment>溶液制备量设定 L/h</comment>
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="powder_screw_start" typeName="BOOL">
+				<comment>溶药机螺杆启停</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="stirrer_1_auto_start " typeName="BOOL">
+				<comment>1#搅拌机启停</comment>
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="stirrer_2_auto_start " typeName="BOOL">
+				<comment>2#搅拌机启停</comment>
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="stirrer_3_auto_start " typeName="BOOL">
+				<comment>3#搅拌机启停</comment>
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="water_input_flow_setpoint" typeName="REAL">
+				<comment>进水流量PID setpoint</comment>
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="water_input_valve_position" typeName="REAL">
+				<comment>进水电动阀开度位置设定</comment>
+                <attribute name="PositionPin" value="6"></attribute>
+			</variables>
+		</outputParameters>
+		<FBProgram name="preparing">
+            <STSource>
+(*溶药机控制 *)	
+
+	
+(*储液槽液位低于开机液位，则开始制备高锰酸钾*)	
+(*通过控制溶药机螺杆启停控制溶药机启停*)	
+
+	IF local_control.start_polymer_preparing = 1 THEN
+	   (*确认进水压力正常*) 
+	    IF water_pressure_data.low_pressure_alarm = 0 THEN
+           (*确认溶药机螺杆、搅拌机都不在检修状态*) 
+            IF local_control.powder_screw_maintain = 0
+                AND local_control.stirrer_1_maintain = 0
+                AND local_control.stirrer_2_maintain = 0
+                AND local_control.stirrer_3_maintain = 0
+                AND local_control.water_in_valve_maintain = 0
+                AND local_control.water_pressure_sensor_maintain = 0 THEN
+               (*料斗物位不能过低*) 
+               (*料斗物位低探头需要取反，1为正常，0为过低*) 
+                IF local_control.powder_level_low = 1 THEN
+                   (*启动溶药机螺杆*) 
+                    powder_screw_start:= 1;
+                END_IF;
+            END_IF;
+	    END_IF;
+	END_IF;
+	
+(*储液槽液位低于停机液位时维持制备状态，若高于停机液位，则停止制备*)	
+	IF local_control.start_polymer_preparing =0 THEN
+       (*停止溶药机螺杆*) 
+        local_control.powder_screw_start := 0;
+	END_IF;
+	
+(*进水电动阀随溶药机螺杆动作*)	
+(*螺杆停止时进水电动阀关闭*)
+	IF powder_screw_status = 0 THEN
+	   (*溶药机停机时，进水电动阀关闭*) 
+       (*先改流量设定点再直接关阀*) 
+        (*setpoint means PID setpoint*)
+	    water_input_flow_setpoint := 0.0;
+        water_input_valve_position := 0.0;
+           (*下述为测试用代码*) 
+           (*"溶药机进水电动阀开度AO" := 8000;*) 
+            (*"溶药机进水电动阀开度AO" := "PLC内部控制".溶药机进水阀门开度自动计算;*) 
+	ELSE
+	       (*设置PID setpoint*) 
+            (*手动模式下自动失效*)
+        water_input_flow_setpoint := solution_prepare_flow ;
+           (*溶药机螺杆运行时，搅拌机必须启动*) 
+            (*螺杆不运行时，搅拌机可按基本程序，动、停交替*)
+	        local_control.stirrer_1_auto_start := 1;
+	        local_control.stirrer_2_auto_start := 1;
+	        local_control.stirrer_3_auto_start := 1;
+	END_IF;
+			</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

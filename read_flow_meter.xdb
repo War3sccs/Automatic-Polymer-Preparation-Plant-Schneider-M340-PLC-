@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<FBExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2022-11-8-15:2:18" content="功能块源文件" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.197" dateTime="date_and_time#2022-10-28-16:21:14"></contentHeader>
+	<FBSource nameOfFBType="PID_flow_control" version="0.06" dateTime="dt#2022-11-04-16:48:43">
+		<attribute name="TypeCodeCheckSumString" value="C959"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="EDBB"></attribute>
+		<inputParameters>
+			<variables name="liquid_flow" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="switch_auto_manual" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="water_in_PID_parameter" typeName="PID_parameter">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="control_output" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="liquid_flow_INT" typeName="INT"></variables>
+			<variables name="scale_real_to_int_1" typeName="scale_real_to_int"></variables>
+			<variables name="bool_to_ebool" typeName="EBOOL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="PID_valve_control">
+			<STSource>(* PID自动控制进水阀门开度 *)
+scale_real_to_int_1 (input_value := liquid_flow,
+                     input_min := 0.0,
+                     input_max := 3000.0,
+                     output_min := 0,
+                     output_max := 10000,
+                     output_value =&gt; liquid_flow_INT);
+(*将输入的bool格式转换为ebool格式*)
+bool_to_ebool := switch_auto_manual;
+
+(* PID过程函数 *)
+PID_INT (TAG := 'waterin_flow',
+         UNIT := 'L/h',
+         PV := liquid_flow_INT,
+         AUTO := bool_to_ebool,
+         PARA := water_in_PID_parameter,
+         OUT =&gt; control_output);
+
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="PID_parameter" version="0.00" dateTime="dt#2022-09-30-16:48:06">
+		<attribute name="TypeSignatureCheckSumString" value="750C"></attribute>
+		<array>ARRAY[0..43] OF INT</array>
+	</DDTSource>
+	<FBSource nameOfFBType="pump_dosing_manual" version="0.02" dateTime="dt#2022-11-08-14:30:46">
+		<attribute name="TypeCodeCheckSumString" value="A872"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="4E9C"></attribute>
+		<inputParameters>
+			<variables name="start_stop_in" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="frequency_in" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="start_stop_out" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="frequency_out" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</outputParameters>
+		<FBProgram name="pump_manual_control">
+			<STSource>
+(*泵启停*)
+start_stop_out := start_stop_in;
+(*频率设置*)
+frequency_out := frequency_in;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="read_flow_meter" version="0.04" dateTime="dt#2022-11-08-15:01:28">
+		<attribute name="TypeCodeCheckSumString" value="634D"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="2DBF"></attribute>
+		<inputParameters>
+			<variables name="frequency_source" typeName="DINT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="K_factor" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="flow_output" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="frequency_source_real" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="frequency_to_flow">
+			<STSource>
+(*频率转换为real类型*)
+frequency_source_real := DINT_TO_REAL(IN := frequency_source);
+(*每脉冲0.001L，频率为Hz*，流量转换为L/h*)
+flow_output := frequency_source_real * K_factor * 60.0 * 60.0;                
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="powder_screw_auto_control" version="0.02" dateTime="dt#2022-11-04-16:22:35">
+		<attribute name="TypeCodeCheckSumString" value="C170"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="3085"></attribute>
+		<inputParameters>
+			<variables name="powder_feeder_capacity" typeName="REAL">
+				<comment>螺旋进料器投粉能力 kg/h</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="solution_prepare_flow" typeName="REAL">
+				<comment>溶液制备量L/h</comment>
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="solution_concentration" typeName="REAL">
+				<comment>高锰酸钾浓度%</comment>
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="powder_motor_frequency_setting" typeName="REAL">
+				<comment>进料电机频率Hz</comment>
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="powder_dosing_flow" typeName="REAL">
+				<comment>溶药机固体加粉量kg/h</comment>
+			</variables>
+		</privateLocalVariables>
+		<FBProgram name="frequency_output">
+			<STSource>
+(*计算溶药机固体加粉量   制备量L/h*)
+(*高锰酸钾溶液投率mg/L  高锰酸钾密度g/cm3  加粉量kg/h  高锰酸钾溶液浓度%*)
+	powder_dosing_flow := solution_prepare_flow *
+    (*"PLC内部控制".高锰酸钾密度 *)
+	    solution_concentration / 100.0;
+	
+   (*自动计算螺杆运行频率*) 
+   (*将计算出的固体加粉量， 对照50Hz时进料螺杆的进料能力， 计算出进料螺杆应该运行的频率*) 
+	    powder_motor_frequency_setting := powder_dosing_flow / powder_feeder_capacity * 50.0;
+			
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="motor_data_write" version="0.05" dateTime="dt#2022-10-27-15:16:38">
+		<attribute name="TypeCodeCheckSumString" value="F499"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="FED7"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="motor_start" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="malfunction_reset" typeName="BOOL">
+				<attribute name="PositionPin" value="11"></attribute>
+			</variables>
+			<variables name="motor_status" typeName="BOOL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="motor_Hz_setting" typeName="REAL">
+				<attribute name="PositionPin" value="7"></attribute>
+			</variables>
+			<variables name="motor_data_read" typeName="modbus_data_read">
+				<attribute name="PositionPin" value="8"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="data_write" typeName="modbus_data_write">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+			<variables name="communication_index" typeName="INT">
+				<attribute name="PositionPin" value="9"></attribute>
+			</variables>
+			<variables name="cancel" typeName="BOOL">
+				<attribute name="PositionPin" value="10"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="connect_report" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="setting_Hz_real" typeName="REAL"></variables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+			<variables name="write_status" typeName="modbus_status"></variables>
+		</privateLocalVariables>
+		<FBProgram name="modbus_write">
+			<STSource>
+setting_Hz_real := motor_Hz_setting * 10.0;
+if motor_start = 1 then
+    if motor_status = 1 then
+        (*启动*)
+        data_write[0] := 16#000F;
+        (*设置频率*)
+        data_write[1] := REAL_TO_INT(IN := setting_Hz_real);
+    else
+        if motor_data_read[0].6 = 1 then
+            (*shutdown*)
+            data_write[0] := 16#0006;
+        elsif motor_data_read[0].0 = 1 
+        and motor_data_read[0].1 = 0 
+        (*and motor_data_read[0].4 = 0 *)
+        and motor_data_read[0].5 = 1 
+        then
+            (*switch on *)
+            data_write[0] := 16#0007;
+        elsif motor_data_read[0].0 = 1 
+        and motor_data_read[0].1 = 1 
+        and motor_data_read[0].4 = 1 
+        and motor_data_read[0].5 = 1 
+        then
+            (*启动*)
+            data_write[0] := 16#000F;
+            (*设置频率*)
+            data_write[1] := REAL_TO_INT(IN := setting_Hz_real);
+        end_if;
+    end_if;
+else
+    if motor_status = 1 then
+        (*停止*)
+        data_write[0] := 16#0002;
+    end_if;
+end_if;
+(*故障复位*)
+if malfunction_reset = 1 then
+    (*malfunction_reset *)
+    data_write[0] := 16#0080;
+end_if;
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+write_status[2] := 50;
+if write_status[0].0 = 0 then
+    WRITE_VAR (ADR := address_in_transform,
+    OBJ := '%MW',
+    NUM := 8501,
+    NB := 2,
+    EMIS := data_write,
+    GEST := write_status);
+end_if;
+
+(*通信状态*)
+activity := write_status[0].0;
+cancel := write_status[0].1;
+connect_report := write_status[1];
+(*轮询*)
+communication_index := communication_index + 1;
+            
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<DDTSource DDTName="modbus_data_read" version="0.01" dateTime="dt#2022-10-24-17:08:21">
+		<attribute name="TypeSignatureCheckSumString" value="EC65"></attribute>
+		<array>ARRAY[0..10] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_data_write" version="0.00" dateTime="dt#2022-10-25-16:49:45">
+		<attribute name="TypeSignatureCheckSumString" value="1864"></attribute>
+		<array>ARRAY[0..1] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_address" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="2437"></attribute>
+		<array>ARRAY[0..7] OF INT</array>
+	</DDTSource>
+	<DDTSource DDTName="modbus_status" version="0.00" dateTime="dt#2022-10-24-13:47:38">
+		<attribute name="TypeSignatureCheckSumString" value="0C55"></attribute>
+		<array>ARRAY[0..3] OF INT</array>
+	</DDTSource>
+	<FBSource nameOfFBType="motor_data_read" version="0.07" dateTime="dt#2022-10-26-11:54:42">
+		<attribute name="TypeCodeCheckSumString" value="6ECD"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="ECE4"></attribute>
+		<inputParameters>
+			<variables name="device_address" typeName="STRING">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="first_object" typeName="DINT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="object_number" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</inputParameters>
+		<inOutParameters>
+			<variables name="cancel" typeName="BOOL">
+				<attribute name="PositionPin" value="6"></attribute>
+			</variables>
+			<variables name="communication_index" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="data_read" typeName="modbus_data_read">
+				<attribute name="PositionPin" value="8"></attribute>
+			</variables>
+		</inOutParameters>
+		<outputParameters>
+			<variables name="running_status" typeName="BOOL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="Fault_detection" typeName="BOOL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="activity" typeName="BOOL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+			<variables name="connect_report" typeName="INT">
+				<attribute name="PositionPin" value="7"></attribute>
+			</variables>
+			<variables name="running_Hz" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="address_in_transform" typeName="modbus_address"></variables>
+			<variables name="running_Hz_source" typeName="INT"></variables>
+			<variables name="read_status" typeName="modbus_status"></variables>
+		</privateLocalVariables>
+		<FBProgram name="modbus_read">
+			<STSource>
+address_in_transform := ADDM (IN := device_address);
+(* Time out duration setting*)
+read_status[2] := 50;
+(*if it isn't reading busy, then read*)
+if activity = 0
+then
+READ_VAR (ADR := address_in_transform,
+          OBJ := '%MW',
+          NUM := first_object,
+          NB := object_number,
+          GEST := read_status,
+          RECP =&gt; data_read);
+(*cancel*)
+(*read_status[0].1 := 1;*)
+end_if;
+
+(*更新数据*)
+(*通信状态*)
+activity := read_status[0].0;
+cancel := read_status[0].1;
+connect_report := read_status[1];
+(*读取的数据*)
+running_status := data_read[0].2;
+Fault_detection := data_read[0].3;
+(*转换频率数据*)
+running_Hz_source := data_read[1];
+running_Hz := INT_TO_REAL(IN := running_Hz_source);
+running_Hz := running_Hz / 10.0;
+(*轮询*)
+communication_index := communication_index + 1;
+			
+
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="scale_int_to_real" version="0.01" dateTime="dt#2022-09-30-17:00:55">
+		<attribute name="TypeCodeCheckSumString" value="FA28"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="5604"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="INT">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="INT">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="REAL">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="REAL">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_int_real">
+			<STSource>
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_int := input_min;
+elsif input_value &gt; input_max then
+temp_int := input_max;
+else
+temp_int := input_value;
+end_if;
+
+(* 整型转浮点 *)
+temp_real := INT_TO_REAL (IN := temp_int);
+temp_min := INT_TO_REAL (IN := input_min);
+temp_max := INT_TO_REAL (IN := input_max);
+
+(* 转换 *)
+output_value := (temp_real-temp_min) / (temp_max-temp_min) * (output_max-output_min) + output_min;
+</STSource>
+		</FBProgram>
+	</FBSource>
+	<FBSource nameOfFBType="scale_real_to_int" version="0.01" dateTime="dt#2022-09-30-17:00:54">
+		<attribute name="TypeCodeCheckSumString" value="8E45"></attribute>
+		<attribute name="TypeSignatureCheckSumString" value="18BF"></attribute>
+		<inputParameters>
+			<variables name="input_value" typeName="REAL">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+			<variables name="input_min" typeName="REAL">
+				<attribute name="PositionPin" value="2"></attribute>
+			</variables>
+			<variables name="input_max" typeName="REAL">
+				<attribute name="PositionPin" value="3"></attribute>
+			</variables>
+			<variables name="output_min" typeName="INT">
+				<attribute name="PositionPin" value="4"></attribute>
+			</variables>
+			<variables name="output_max" typeName="INT">
+				<attribute name="PositionPin" value="5"></attribute>
+			</variables>
+		</inputParameters>
+		<outputParameters>
+			<variables name="output_value" typeName="INT">
+				<attribute name="PositionPin" value="1"></attribute>
+			</variables>
+		</outputParameters>
+		<privateLocalVariables>
+			<variables name="temp_int" typeName="INT"></variables>
+			<variables name="temp_real" typeName="REAL"></variables>
+			<variables name="temp_min" typeName="REAL"></variables>
+			<variables name="temp_max" typeName="REAL"></variables>
+		</privateLocalVariables>
+		<FBProgram name="convert_real_int">
+			<STSource>;
+(* 限定范围 *)
+if input_value &lt; input_min then 
+temp_real := input_min;
+elsif input_value &gt; input_max then
+temp_real := input_max;
+else
+temp_real := input_value;
+end_if;
+
+(* 整型转浮点 *)
+(*temp_real := INT_TO_REAL (IN := temp_int);*)
+(*temp_min :=  input_min;*)
+(*temp_max :=  input_max;*)
+temp_min := INT_TO_REAL (IN := output_min);
+temp_max := INT_TO_REAL (IN := output_max);
+
+(* 转换 *)
+output_value := REAL_TO_INT((temp_real-input_min) / (input_max-input_min) * (temp_max - temp_min) + temp_min);
+</STSource>
+		</FBProgram>
+	</FBSource>
+</FBExchangeFile>

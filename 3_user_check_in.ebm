@@ -1,0 +1,12 @@
+﻿macro_definition_begin
+    "id": "3"
+    "name": "user_check_in"
+    "startup": "false"
+    "periodic": [ "false" ]
+    "interlock": [ "false" ]
+macro_definition_end
+
+macro_command main()
+int control=1
+SetData(control, "Local HMI", LW, 8950, 1)
+end macro_command

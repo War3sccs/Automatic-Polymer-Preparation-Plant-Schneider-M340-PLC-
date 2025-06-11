@@ -1,0 +1,18 @@
+﻿macro_definition_begin
+    "id": "0"
+    "name": "read_running_Hz_from_PLC"
+    "startup": "false"
+    "periodic": [ "true", "10" ]
+    "interlock": [ "false" ]
+macro_definition_end
+
+macro_command main()
+float Hz_float_50_1=0, Hz_float_50_2=0,Hz_float_50_3=0
+GetData(Hz_float_50_1, "Schneider M340/M580 series", "local_control.powder_screw_running_Hz", 1)
+GetData(Hz_float_50_2, "Schneider M340/M580 series", "local_control.metering_pump_1_running_Hz", 1)
+GetData(Hz_float_50_1, "Schneider M340/M580 series", "local_control.metering_pump_2_running_Hz", 1)
+SetData(Hz_float_50_1, "Local HMI", RW, 1, 1)
+SetData(Hz_float_50_2, "Local HMI", RW, 3, 1)
+SetData(Hz_float_50_3, "Local HMI", RW, 5, 1)
+
+end macro_command
