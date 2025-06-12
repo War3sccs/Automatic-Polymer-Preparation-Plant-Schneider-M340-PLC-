@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DDTExchangeFile>
+	<fileHeader company="Schneider Automation" product="Unity Pro XL V13.1 - 180823C" dateTime="date_and_time#2025-6-12-13:35:45" content="Derived Data Type source file" DTDVersion="41"></fileHeader>
+	<contentHeader name="项目" version="0.0.332" dateTime="date_and_time#2022-11-28-16:15:20"></contentHeader>
+	<DDTSource DDTName="modbus_data_write" version="0.00" dateTime="dt#2022-10-25-16:49:45">
+		<attribute name="TypeSignatureCheckSumString" value="1864"></attribute>
+		<array>ARRAY[0..1] OF INT</array>
+	</DDTSource>
+</DDTExchangeFile>
